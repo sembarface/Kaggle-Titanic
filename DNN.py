@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-import tqdm
+from tqdm import tqdm
 
 import matplotlib.pyplot as plt
 
@@ -29,8 +29,8 @@ class DNN(nn.Module):
         self.learning_rate = learning_rate
         
         self.preprocessor = make_pipeline(
-                    SimpleImputer(),
-                    StandardScaler()
+            SimpleImputer(),
+            StandardScaler()
         )
         
         self.mlp = nn.Sequential(
@@ -77,7 +77,7 @@ class DNN(nn.Module):
         
         self.val_losses_ = []
         self.train_losses_ = []
-        for epoch in tqdm.tqdm(range(self.epochs)):
+        for epoch in tqdm(range(self.epochs)):
             
             self.train()
             train_loss = 0.0
@@ -122,11 +122,11 @@ class DNN(nn.Module):
             
             scheduler.step()
         
-        
-        plt.plot(self.train_losses_,label='train')
-        plt.plot(self.val_losses_, label='val')
-        plt.legend()
-        plt.show()
+        if verbose:
+            plt.plot(self.train_losses_,label='train')
+            plt.plot(self.val_losses_, label='val')
+            plt.legend()
+            plt.show()
         
         return self
     

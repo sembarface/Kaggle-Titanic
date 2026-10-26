@@ -1,14 +1,17 @@
 class Config:
     seed = 228
 
-    experiment_name = 'default_tuned'
+    experiment_name = 'default_tuned_noFare'
     models_to_train = ["logreg", 'KNN', 'decision_tree', 'random_forest', 
                        'catboost', 'xgboost', 'lgbm', 'DNN']
     
+    solver_model = 'lgbm'
     
-    
+    use_holdout = True
+    is_train = False
     
     path_to_experiment = f"experiments/{experiment_name}"
+    path_to_data = f"data/train.csv"
     
     stratified_kfold_parameters = {
         'n_splits': 5,
