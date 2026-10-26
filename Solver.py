@@ -19,16 +19,21 @@ from DNN import DNN
 
 # Inference
 class Solver:
-    def __init__(self, model_name='catboost', experiment_name='default'):
+    def __init__(self, model_name=config.solver_model):
         
         self.model_name = model_name
         
         path_to_experiment = config.path_to_experiment
         path_to_models = os.path.join(path_to_experiment, model_name)
         
+        # Dataset chekpoint loading
+        with open(f'{path_to_experiment}/dataset_checkpoint.pickle', 'rb') as f:
+            self.dataset = pickle.load(f)
+        
+        # Models loading
         self.models = []
         for fold in sorted(os.listdir(path_to_models)):
-            if not fold.endswith('.pickle'):
+            if not fold.startswith('fold_') or not fold.endswith('.pickle'):
                 continue
             
             with open(f'{path_to_models}/{fold}', 'rb') as f:
@@ -45,6 +50,7 @@ class Solver:
                 self.models.append(model)
     
     def predict_proba(self, X):
+        X = self.dataset.preprocessing(X)
         probabilities = []
         for model in self.models:
             proba = model.predict_proba(X)
@@ -60,20 +66,23 @@ class Solver:
         return mean_predictions
     
     def get_plots(self):
+        if self.model_name in ["logreg", 'KNN', 'decision_tree', 'random_forest']:
+            print('No plots with sklearn models')
+            return
         
         if self.model_name == 'catboost':
             mean_train_results = np.mean([model.get_evals_result()['learn']['Logloss'] for model in self.models], axis=0)
             mean_val_results = np.mean([model.get_evals_result()['validation']['Logloss'] for model in self.models], axis=0)
         
-        if self.model_name == 'xgboost':
+        elif self.model_name == 'xgboost':
             mean_train_results = np.mean([model.evals_result()['validation_0']['logloss'] for model in self.models], axis=0)
             mean_val_results = np.mean([model.evals_result()['validation_1']['logloss'] for model in self.models], axis=0)
         
-        if self.model_name == 'lgbm':
+        elif self.model_name == 'lgbm':
             mean_train_results = np.mean([model.evals_result_['train']['binary_logloss'] for model in self.models], axis=0)
             mean_val_results = np.mean([model.evals_result_['val']['binary_logloss'] for model in self.models], axis=0)
         
-        if self.model_name == 'DNN':
+        elif self.model_name == 'DNN':
             mean_train_results = np.mean([model.train_losses_ for model in self.models], axis=0)
             mean_val_results = np.mean([model.val_losses_ for model in self.models], axis=0)
         
