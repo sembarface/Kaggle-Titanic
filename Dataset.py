@@ -15,15 +15,25 @@ class Dataset:
 
     def preprocessing(self, features: pd.DataFrame) -> pd.DataFrame:
         
+        params = self.feature_parameters
+        
         df = features.copy()
         
-        df = df.drop(columns=self.feature_parameters['drop_columns'])
+        if params['add_family_size']:
+            df['FamilySize'] = df['SibSp'] + df['Parch'] + 1
         
+        if params['add_is_alone']:
+            df = (df['SibSp'] + df['Parch'] == 0).astype(int)
+        
+        
+        df = df.drop(columns=self.feature_parameters['drop_columns'])
+            
         # Categorical features
-        for col in self.feature_parameters['cat_columns']:
+        for col in params['cat_columns']:
             df[col] = df[col].fillna('Unknown').astype('category')
         
         return df
+
 
     def get_X(self) -> pd.DataFrame:
         

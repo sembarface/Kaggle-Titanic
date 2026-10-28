@@ -198,3 +198,11 @@ catboost_error_test | catboost | CV score 0.8258 | 15.2410 s
 catboost_error_test | catboost | CV score 0.8286 | 32.8025 s
 catboost_error_test | catboost | CV score 0.8286 | 24.7778 s
 catboost_error_test | catboost | CV score 0.8314 | 2.1985 s
+testiruy | logreg | CV score 0.8005 | 0.1011 s
+testiruy | KNN | CV score 0.7921 | 0.0823 s
+testiruy | decision_tree | CV score 0.8146 | 0.0739 s
+testiruy | random_forest | CV score 0.8272 | 1.5518 s
+testiruy | catboost | CV score 0.8314 | 2.3831 s
+testiruy | xgboost | CV score 0.8356 | 2.8838 s
+testiruy | lgbm | CV score 0.8356 | 1.8587 s
+testiruy | DNN | CV score 0.8075 | 13.4539 s

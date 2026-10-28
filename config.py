@@ -1,14 +1,15 @@
 class Config:
     seed = 228
 
-    experiment_name = 'catboost_error_test'
+    experiment_name = 'testiruy'
     
-    models_to_train = ['catboost']
+    models_to_train = ["logreg", 'KNN', 'decision_tree', 'random_forest', 
+                       'catboost', 'xgboost', 'lgbm', 'DNN']
     
     solver_model = 'catboost'
     
     use_holdout = True
-    is_train = True
+    is_train = False
     
     path_to_experiment = f"experiments/{experiment_name}"
     path_to_data = f"data/train.csv"
@@ -18,6 +19,7 @@ class Config:
         'cat_columns': ['Sex', 'Embarked'],
         'drop_columns': ['Name', 'Ticket', 'Cabin'],
         'add_family_size': True,
+        'add_is_alone': True,
     }
     
     stratified_kfold_parameters = {

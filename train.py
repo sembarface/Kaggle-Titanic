@@ -104,7 +104,7 @@ def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index):
 
 
     # Model saving
-    if model_name in ["logreg", 'KNN', 'decision_tree', 'random_forest', 'catboost', 'xgboost', 'lgbm']:
+    if model_name != 'DNN':
         with open(f"{save_dir}/fold_{fold_index}.pickle", "wb") as f:
             pickle.dump(model, f)
     
@@ -117,7 +117,7 @@ def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index):
 
 
 def get_preprocessor(model_name, columns, cat_columns):
-
+    
     if model_name in ['catboost', 'xgboost', 'lgbm', 'DNN']:
         return None
 

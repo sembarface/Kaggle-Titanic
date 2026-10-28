@@ -47,7 +47,7 @@ class Solver:
 
                 elif model_name == 'DNN':
                     checkpoint = pickle.load(f)
-                    model = DNN(input_size=checkpoint['input_size'])
+                    model = DNN()
                     model.load_checkpoint(checkpoint)
                     model.eval()
                     

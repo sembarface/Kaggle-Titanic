@@ -1,5 +1,4 @@
 import random
-import pickle
 import os
 import json
 import subprocess
@@ -9,19 +8,11 @@ import shap
 import numpy as np
 import pandas as pd
 
-
-from tqdm import tqdm
-
-import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_theme(style='darkgrid')
-
 from config import Config
 
 
 
 from sklearn.model_selection import train_test_split
-
 from sklearn.model_selection import StratifiedKFold
 
 from sklearn.metrics import accuracy_score
@@ -35,7 +26,7 @@ from DNN import DNN
 from Solver import Solver
 from Dataset import Dataset
 
-from train import train_one_model_CV, train_one_model
+from train import  train_one_model
 
 
 
@@ -126,7 +117,6 @@ def main():
                 f.write(f'{config.experiment_name} | {model_name} | CV score {cv_score:.4f} | {cv_time:.4f} s\n')
                                     
              
-
 
     # Pick solver
     
