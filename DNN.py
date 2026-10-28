@@ -8,37 +8,36 @@ import matplotlib.pyplot as plt
 from config import Config
 config = Config()
 
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import make_pipeline
+from sklearn.compose import ColumnTransformer
 
 import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
 
 class DNN(nn.Module):
-    def __init__(self, input_size, output_size=1, epochs=100, device='cuda', batch_size=32, 
+    def __init__(self, output_size=1, epochs=100, device='cuda', batch_size=32, 
                 learning_rate=3e-4):
         super().__init__()
         
-        self.input_size = input_size
         self.output_size = output_size
         self.epochs = epochs
         self.device = device
         self.batch_size = batch_size
         self.learning_rate = learning_rate
         
-        self.preprocessor = make_pipeline(
-            SimpleImputer(),
-            StandardScaler()
-        )
+        
+        
+    def _build_model(self, input_size):
         
         self.mlp = nn.Sequential(
             nn.Linear(input_size, 5),
             nn.BatchNorm1d(5),
             nn.ReLU(),
             
-            nn.Linear(5, output_size),
+            nn.Linear(5, self.output_size),
             nn.Sigmoid()
         )
         
@@ -50,12 +49,33 @@ class DNN(nn.Module):
     def fit(self, X_train: pd.DataFrame, y_train: pd.DataFrame, 
             X_val: pd.DataFrame, y_val: pd.DataFrame, verbose=False):
         
-        self.input_size = X_train.shape[1]
-        self.to(self.device)
+        categorical = config.feature_parameters['cat_columns']
+
+        numerical = [
+            col for col in X_train.columns
+            if col not in categorical
+        ]
+
+
+        self.preprocessor = ColumnTransformer([
+            ('num', make_pipeline(
+                SimpleImputer(strategy='median'),
+                StandardScaler()
+            ), numerical),
+
+            ('cat', make_pipeline(
+                SimpleImputer(strategy='most_frequent'),
+                OneHotEncoder(
+                    handle_unknown='ignore',
+                    sparse_output=False
+                )
+            ), categorical)
+        ])
         
         
         self.preprocessor.fit(X_train)
         
+        # Prepare data
         X_train_tensor = torch.tensor(self.preprocessor.transform(X_train), dtype=torch.float32)
         X_val_tensor = torch.tensor(self.preprocessor.transform(X_val), dtype=torch.float32)
         
@@ -67,6 +87,11 @@ class DNN(nn.Module):
         
         val_dataset = TensorDataset(X_val_tensor, y_val_tensor)
         val_loader = DataLoader(val_dataset, batch_size=self.batch_size, shuffle=False)
+        
+        
+        self.input_size = X_train_tensor.shape[1]
+        self._build_model(self.input_size)
+        self.to(self.device)
         
 
         
@@ -158,9 +183,11 @@ class DNN(nn.Module):
         return checkpoint
     
     def load_checkpoint(self, checkpoint):
+        self.input_size = checkpoint['input_size']
+        self._build_model(self.input_size)
         self.load_state_dict(checkpoint['model_state_dict'])
         self.to(self.device)
-        self.input_size = checkpoint['input_size']
+        
         self.preprocessor = checkpoint['preprocessor']
         self.train_losses_ = checkpoint['train_losses']
         self.val_losses_ = checkpoint['val_losses']

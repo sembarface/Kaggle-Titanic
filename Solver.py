@@ -1,5 +1,6 @@
 import pickle
 import os
+import json
 
 import shap
 import numpy as np
@@ -13,6 +14,7 @@ sns.set_theme(style='darkgrid')
 from config import Config
 config = Config()
 
+from Dataset import Dataset
 from DNN import DNN
 
 
@@ -26,9 +28,11 @@ class Solver:
         path_to_experiment = config.path_to_experiment
         path_to_models = os.path.join(path_to_experiment, model_name)
         
-        # Dataset chekpoint loading
-        with open(f'{path_to_experiment}/dataset_checkpoint.pickle', 'rb') as f:
-            self.dataset = pickle.load(f)
+        # Experiment config loading
+        with open(f'{path_to_experiment}/config.json') as f:
+            self.experiment_config = json.load(f)
+        
+        self.dataset = Dataset(feature_parameters=self.experiment_config['feature_parameters'])
         
         # Models loading
         self.models = []

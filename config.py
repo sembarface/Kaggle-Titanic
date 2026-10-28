@@ -1,17 +1,24 @@
 class Config:
     seed = 228
 
-    experiment_name = 'default_tuned_noFare'
-    models_to_train = ["logreg", 'KNN', 'decision_tree', 'random_forest', 
-                       'catboost', 'xgboost', 'lgbm', 'DNN']
+    experiment_name = 'catboost_error_test'
     
-    solver_model = 'lgbm'
+    models_to_train = ['catboost']
+    
+    solver_model = 'catboost'
     
     use_holdout = True
-    is_train = False
+    is_train = True
     
     path_to_experiment = f"experiments/{experiment_name}"
     path_to_data = f"data/train.csv"
+    
+    
+    feature_parameters = {
+        'cat_columns': ['Sex', 'Embarked'],
+        'drop_columns': ['Name', 'Ticket', 'Cabin'],
+        'add_family_size': True,
+    }
     
     stratified_kfold_parameters = {
         'n_splits': 5,
@@ -61,6 +68,8 @@ class Config:
             'loss_function': 'Logloss',
             'eval_metric': 'Logloss',
             'random_seed': seed,
+            'one_hot_max_size': 10,
+            'verbose': 0,
         },
 
         'xgboost': {
@@ -75,6 +84,7 @@ class Config:
             'tree_method': 'hist',
             'n_jobs': -1,
             'random_state': seed,
+            'enable_categorical':True
         },
 
         'lgbm': {
@@ -98,3 +108,18 @@ class Config:
             'learning_rate': 3e-4,
         },
     }
+    
+    def to_dict(self):
+        return {
+            'experiment_name': self.experiment_name,
+            'seed': self.seed,
+            'feature_parameters': self.feature_parameters,
+            'model_parameters': {
+                name: self.model_parameters[name]
+                for name in self.models_to_train
+            },
+            'stratified_kfold_parameters': self.stratified_kfold_parameters,
+            'use_holdout': self.use_holdout,
+            'models_to_train': self.models_to_train,
+            'solver_model': self.solver_model
+        }
