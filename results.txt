@@ -208,3 +208,11 @@ testiruy | lgbm | CV score 0.8356 | 1.8587 s
 testiruy | DNN | CV score 0.8075 | 13.4539 s
 stacking_first_test | stacking | CV score 0.8230 | 1.0080 s
 stacking_random_forest_test | stacking | CV score 0.8117 | 8.9144 s
+DNN_more_layers | DNN | CV score 0.8047 | 17.1125 s
+DNN_more_layers | DNN | CV score 0.7977 | 16.5850 s
+DNN_more_layers | DNN | CV score 0.7921 | 17.0624 s
+DNN_more_layers | DNN | CV score 0.7992 | 36.5529 s
+DNN_more_layers | DNN | CV score 0.6166 | 27.7002 s
+DNN_best_state_test | DNN | CV score 0.7908 | 15.4758 s
+DNN_best_state_test | DNN | CV score 0.7908 | 14.8959 s
+DNN_best_state_test | DNN | CV score 0.8019 | 145.7179 s

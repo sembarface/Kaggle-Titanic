@@ -1,3 +1,5 @@
+import copy
+
 import numpy as np
 import pandas as pd
 
@@ -5,8 +7,6 @@ from tqdm import tqdm
 
 import matplotlib.pyplot as plt
 
-from config import Config
-config = Config()
 
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
@@ -53,9 +53,9 @@ class DNN(nn.Module):
         return out
     
     def fit(self, X_train: pd.DataFrame, y_train: pd.DataFrame, 
-            X_val: pd.DataFrame, y_val: pd.DataFrame, verbose=False):
+            X_val: pd.DataFrame, y_val: pd.DataFrame, feature_parameters, verbose=False):
         
-        categorical = config.feature_parameters['cat_columns']
+        categorical = feature_parameters['cat_columns']
 
         numerical = [
             col for col in X_train.columns
@@ -108,6 +108,9 @@ class DNN(nn.Module):
         
         self.val_losses_ = []
         self.train_losses_ = []
+        self.best_val_loss_ = torch.inf
+        best_state = None
+                
         for epoch in tqdm(range(self.epochs)):
             
             self.train()
@@ -144,9 +147,15 @@ class DNN(nn.Module):
                     loss = loss_function(outputs, y_batch)
                     
                     val_loss += loss.item()
-                    
+                
             val_loss /= len(val_loader)
             self.val_losses_.append(val_loss)
+            
+            # Remember best_sate
+            if val_loss < self.best_val_loss_:
+                best_epoch = epoch + 1
+                self.best_val_loss_ = val_loss
+                best_state = copy.deepcopy(self.state_dict())
             
             if verbose:
                 print((f"Validation Loss: {val_loss:.4f}"))
@@ -154,11 +163,13 @@ class DNN(nn.Module):
             scheduler.step()
         
         if verbose:
+            print(f'Best epoch: {best_epoch}')
             plt.plot(self.train_losses_,label='train')
             plt.plot(self.val_losses_, label='val')
             plt.legend()
             plt.show()
-        
+
+        self.load_state_dict(best_state)
         return self
     
     def predict_proba(self, X: pd.DataFrame):

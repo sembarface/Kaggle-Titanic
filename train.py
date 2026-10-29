@@ -92,7 +92,7 @@ def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, conf
     # Deep Neural Network   
     elif model_name == 'DNN':
         model = DNN(**params)
-        model.fit(X_train, y_train, X_val, y_val)
+        model.fit(X_train, y_train, X_val, y_val, config.feature_parameters)
     
     # Stacking with KNN, Decision Tree and Logistic Regression
     elif model_name == 'stacking_knn_tree_logreg':

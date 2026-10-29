@@ -1,11 +1,11 @@
 class Config:
     seed = 228
 
-    experiment_name = 'stacking_random_forest_test'
+    experiment_name = 'DNN_best_state_test'
     
-    models_to_train = ['stacking_knn_tree_logreg']
+    models_to_train = ['DNN']
     
-    solver_model = 'stacking_knn_tree_logreg'
+    solver_model = 'DNN'
     
     use_holdout = True
     is_train = True
