@@ -110,12 +110,13 @@ class DNN(nn.Module):
         self.train_losses_ = []
         self.best_val_loss_ = torch.inf
         best_state = None
-                
+        
+        # Training
         for epoch in tqdm(range(self.epochs)):
             
             self.train()
             train_loss = 0.0
-            
+            # Train loop
             for X_batch, y_batch in train_loader:
                 X_batch, y_batch = X_batch.to(self.device), y_batch.to(self.device)
                 
@@ -139,6 +140,7 @@ class DNN(nn.Module):
             self.eval()
             val_loss = 0.0
             
+            # Validation loop
             with torch.no_grad():
                 for X_batch, y_batch in val_loader:
                     X_batch, y_batch = X_batch.to(self.device), y_batch.to(self.device)
@@ -153,7 +155,7 @@ class DNN(nn.Module):
             
             # Remember best_sate
             if val_loss < self.best_val_loss_:
-                best_epoch = epoch + 1
+                self.best_epoch_ = epoch + 1
                 self.best_val_loss_ = val_loss
                 best_state = copy.deepcopy(self.state_dict())
             
@@ -163,7 +165,7 @@ class DNN(nn.Module):
             scheduler.step()
         
         if verbose:
-            print(f'Best epoch: {best_epoch}')
+            print(f'Best epoch: {self.best_epoch}')
             plt.plot(self.train_losses_,label='train')
             plt.plot(self.val_losses_, label='val')
             plt.legend()
@@ -196,6 +198,7 @@ class DNN(nn.Module):
             'preprocessor': self.preprocessor,
             'train_losses': self.train_losses_,
             'val_losses' : self.val_losses_,
+            'best_epoch': self.best_epoch_
         } 
         return checkpoint
     
@@ -208,6 +211,7 @@ class DNN(nn.Module):
         self.preprocessor = checkpoint['preprocessor']
         self.train_losses_ = checkpoint['train_losses']
         self.val_losses_ = checkpoint['val_losses']
+        self.best_epoch_ = checkpoint['best_epoch']
 
 
 def get_optimizer(optimizer_name, params, lr):

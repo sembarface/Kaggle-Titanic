@@ -216,3 +216,6 @@ DNN_more_layers | DNN | CV score 0.6166 | 27.7002 s
 DNN_best_state_test | DNN | CV score 0.7908 | 15.4758 s
 DNN_best_state_test | DNN | CV score 0.7908 | 14.8959 s
 DNN_best_state_test | DNN | CV score 0.8019 | 145.7179 s
+DNN_best_state_test | DNN | CV score 0.7908 | 37.5568 s
+DNN_best_state_test | DNN | CV score 0.7908 | 16.8385 s
+DNN_best_state_test | DNN | CV score 0.7908 | 14.3069 s
