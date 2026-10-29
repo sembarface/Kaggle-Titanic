@@ -17,9 +17,14 @@ import torch
 import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader
 
+from torch.optim import Adam, SGD
+from torch.optim.lr_scheduler import CosineAnnealingLR
+
+
+
 class DNN(nn.Module):
     def __init__(self, output_size=1, epochs=100, device='cuda', batch_size=32, 
-                learning_rate=3e-4):
+                learning_rate=3e-4, optimizer_name='Adam'):
         super().__init__()
         
         self.output_size = output_size
@@ -27,6 +32,7 @@ class DNN(nn.Module):
         self.device = device
         self.batch_size = batch_size
         self.learning_rate = learning_rate
+        self.optimizer_name = optimizer_name
         
         
         
@@ -96,8 +102,8 @@ class DNN(nn.Module):
 
         
         loss_function = torch.nn.BCELoss()
-        optimizer = torch.optim.Adam(self.parameters(), lr=self.learning_rate)
-        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=self.epochs, eta_min=1e-8)
+        optimizer = get_optimizer(self.optimizer_name, params=self.parameters(), lr=self.learning_rate)
+        scheduler = CosineAnnealingLR(optimizer, T_max=self.epochs)
         
         
         self.val_losses_ = []
@@ -191,4 +197,13 @@ class DNN(nn.Module):
         self.preprocessor = checkpoint['preprocessor']
         self.train_losses_ = checkpoint['train_losses']
         self.val_losses_ = checkpoint['val_losses']
-            
+
+
+def get_optimizer(optimizer_name, params, lr):
+    if optimizer_name == 'Adam':
+        optimizer = Adam(params, lr=lr)
+    
+    elif optimizer_name == 'SGD':
+        optimizer = SGD(params, lr=lr)
+    
+    return optimizer

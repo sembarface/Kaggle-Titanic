@@ -206,3 +206,5 @@ testiruy | catboost | CV score 0.8314 | 2.3831 s
 testiruy | xgboost | CV score 0.8356 | 2.8838 s
 testiruy | lgbm | CV score 0.8356 | 1.8587 s
 testiruy | DNN | CV score 0.8075 | 13.4539 s
+stacking_first_test | stacking | CV score 0.8230 | 1.0080 s
+stacking_random_forest_test | stacking | CV score 0.8117 | 8.9144 s

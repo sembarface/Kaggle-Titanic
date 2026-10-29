@@ -5,15 +5,11 @@ import os
 import numpy as np
 import pandas as pd
 
-from config import Config
-config = Config()
-
-
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, StackingClassifier
 
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
@@ -30,7 +26,7 @@ from lightgbm import LGBMClassifier
 from DNN import DNN
 
 
-def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index):
+def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, config):
   
     # Path to save models
     save_dir = os.path.join(config.path_to_experiment, f'{model_name}')
@@ -97,6 +93,34 @@ def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index):
     elif model_name == 'DNN':
         model = DNN(**params)
         model.fit(X_train, y_train, X_val, y_val)
+    
+    # Stacking with KNN, Decision Tree and Logistic Regression
+    elif model_name == 'stacking_knn_tree_logreg':
+        
+        estimators = [
+            ('knn', make_pipeline(
+                get_preprocessor('KNN', X_train.columns, cat_columns),
+                KNeighborsClassifier(**config.model_parameters['KNN'])
+            )),
+
+            ('tree', make_pipeline(
+                get_preprocessor('decision_tree', X_train.columns, cat_columns),
+                DecisionTreeClassifier(**config.model_parameters['decision_tree'])
+            )),
+
+            ('logreg', make_pipeline(
+                get_preprocessor('logreg', X_train.columns, cat_columns),
+                LogisticRegression(**config.model_parameters['logreg'])
+            ))
+        ]
+
+        model = StackingClassifier(
+            estimators=estimators,
+            final_estimator=LogisticRegression(max_iter=1000),
+            **params
+        )
+        model.fit(X_train, y_train)
+    
         
     # Model predictions
     pred = model.predict(X_val)

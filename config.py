@@ -1,15 +1,14 @@
 class Config:
     seed = 228
 
-    experiment_name = 'testiruy'
+    experiment_name = 'stacking_random_forest_test'
     
-    models_to_train = ["logreg", 'KNN', 'decision_tree', 'random_forest', 
-                       'catboost', 'xgboost', 'lgbm', 'DNN']
+    models_to_train = ['stacking_knn_tree_logreg']
     
-    solver_model = 'catboost'
+    solver_model = 'stacking_knn_tree_logreg'
     
     use_holdout = True
-    is_train = False
+    is_train = True
     
     path_to_experiment = f"experiments/{experiment_name}"
     path_to_data = f"data/train.csv"
@@ -104,11 +103,18 @@ class Config:
         },
 
         'DNN': {
+            'device': 'cuda',
             'output_size': 1,
             'epochs': 100,
             'batch_size': 32,
             'learning_rate': 3e-4,
+            'optimizer_name': 'Adam',
         },
+        
+        'stacking_knn_tree_logreg':{
+            'cv': 5,
+            'stack_method': 'predict_proba'
+        }
     }
     
     def to_dict(self):

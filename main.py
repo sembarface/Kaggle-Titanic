@@ -101,7 +101,7 @@ def main():
                 
                 set_seed(config.seed)
                 
-                score = train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index)
+                score = train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, config)
 
                 val_scores.append(score)
             

@@ -23,7 +23,7 @@ class Dataset:
             df['FamilySize'] = df['SibSp'] + df['Parch'] + 1
         
         if params['add_is_alone']:
-            df = (df['SibSp'] + df['Parch'] == 0).astype(int)
+            df['IsAlone'] = (df['SibSp'] + df['Parch'] == 0).astype(int)
         
         
         df = df.drop(columns=self.feature_parameters['drop_columns'])
