@@ -122,7 +122,7 @@ def main():
     
     if config.use_holdout:
         
-        solver = Solver()
+        solver = Solver(config.path_to_experiment, config.solver_model)
         pred = solver.predict(X_test)
         print(f'{solver.model_name} test accurasy score = ', accuracy_score(pred, y_test))
         # solver.get_plots()

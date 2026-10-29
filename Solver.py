@@ -11,8 +11,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_theme(style='darkgrid')
 
-from config import Config
-config = Config()
+
 
 from Dataset import Dataset
 from DNN import DNN
@@ -21,11 +20,10 @@ from DNN import DNN
 
 # Inference
 class Solver:
-    def __init__(self, model_name=config.solver_model):
+    def __init__(self, path_to_experiment, model_name):
         
         self.model_name = model_name
         
-        path_to_experiment = config.path_to_experiment
         path_to_models = os.path.join(path_to_experiment, model_name)
         
         # Experiment config loading
