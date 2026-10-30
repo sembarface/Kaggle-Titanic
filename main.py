@@ -7,6 +7,7 @@ import time
 import shap
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
 from config import Config
 
@@ -121,12 +122,21 @@ def main():
     # Pick solver
     
     if config.use_holdout:
-        
         solver = Solver(config.path_to_experiment, config.solver_model)
         pred = solver.predict(X_test)
         print(f'{solver.model_name} test accurasy score = ', accuracy_score(pred, y_test))
-        # solver.get_plots()
-    
+        
+        # Train/val plots
+        if config.show_plots:
+            solver.get_plots()
+            
+        
+        # Shap beeswarm on train samples
+        if config.show_shap:
+            X = data.drop('Survived', axis=1)
+            solver.get_shap(X)
+
+
     
     
     

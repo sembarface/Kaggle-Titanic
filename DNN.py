@@ -139,7 +139,6 @@ class DNN(nn.Module):
             
             self.eval()
             val_loss = 0.0
-            
             # Validation loop
             with torch.no_grad():
                 for X_batch, y_batch in val_loader:
@@ -153,7 +152,7 @@ class DNN(nn.Module):
             val_loss /= len(val_loader)
             self.val_losses_.append(val_loss)
             
-            # Remember best_sate
+            # Remember best_state
             if val_loss < self.best_val_loss_:
                 self.best_epoch_ = epoch + 1
                 self.best_val_loss_ = val_loss

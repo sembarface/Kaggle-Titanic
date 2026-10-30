@@ -1,14 +1,17 @@
 class Config:
     seed = 228
 
-    experiment_name = 'DNN_best_state_test'
+    experiment_name = 'playing_parameters'
     
-    models_to_train = ['DNN']
+    models_to_train = ['catboost']
     
-    solver_model = 'DNN'
+    solver_model = 'catboost'
     
     use_holdout = True
-    is_train = True
+    is_train = False
+    
+    show_plots = False
+    show_shap = False
     
     path_to_experiment = f"experiments/{experiment_name}"
     path_to_data = f"data/train.csv"
@@ -70,6 +73,8 @@ class Config:
             'eval_metric': 'Logloss',
             'random_seed': seed,
             'one_hot_max_size': 10,
+            'early_stopping_rounds': 50,
+            'use_best_model': True,
             'verbose': 0,
         },
 
@@ -85,7 +90,8 @@ class Config:
             'tree_method': 'hist',
             'n_jobs': -1,
             'random_state': seed,
-            'enable_categorical':True
+            'enable_categorical':True,
+            'early_stopping_rounds': 50,
         },
 
         'lgbm': {
@@ -100,6 +106,7 @@ class Config:
             'reg_lambda': 1.0,
             'verbosity': -1,
             'random_state': seed,
+            'early_stopping_rounds': 50,
         },
 
         'DNN': {

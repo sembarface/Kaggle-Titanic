@@ -11,7 +11,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set_theme(style='darkgrid')
 
-
+from catboost import Pool
+from xgboost import DMatrix
 
 from Dataset import Dataset
 from DNN import DNN
@@ -67,33 +68,87 @@ class Solver:
         
         return mean_predictions
     
-    def get_plots(self):
-        if self.model_name in ["logreg", 'KNN', 'decision_tree', 'random_forest']:
-            print('No plots with sklearn models')
-            return
-        
+    def get_plots(self, fold =0):
+
         if self.model_name == 'catboost':
-            mean_train_results = np.mean([model.get_evals_result()['learn']['Logloss'] for model in self.models], axis=0)
-            mean_val_results = np.mean([model.get_evals_result()['validation']['Logloss'] for model in self.models], axis=0)
-        
+            train_result = self.models[fold].get_evals_result()['learn']['Logloss']
+            val_result = self.models[fold].get_evals_result()['validation']['Logloss']
+
         elif self.model_name == 'xgboost':
-            mean_train_results = np.mean([model.evals_result()['validation_0']['logloss'] for model in self.models], axis=0)
-            mean_val_results = np.mean([model.evals_result()['validation_1']['logloss'] for model in self.models], axis=0)
-        
+            train_result = self.models[fold].evals_result()['validation_0']['logloss']
+            val_result = self.models[fold].evals_result()['validation_1']['logloss']
+
         elif self.model_name == 'lgbm':
-            mean_train_results = np.mean([model.evals_result_['train']['binary_logloss'] for model in self.models], axis=0)
-            mean_val_results = np.mean([model.evals_result_['val']['binary_logloss'] for model in self.models], axis=0)
-        
+            train_result = self.models[fold].evals_result_['train']['binary_logloss']
+            val_result = self.models[fold].evals_result_['val']['binary_logloss']
+
         elif self.model_name == 'DNN':
-            mean_train_results = np.mean([model.train_losses_ for model in self.models], axis=0)
-            mean_val_results = np.mean([model.val_losses_ for model in self.models], axis=0)
-        
-        plt.plot(mean_train_results, label='train')
-        plt.plot(mean_val_results, label='val')
+            train_result = self.models[fold].train_losses_
+            val_result = self.models[fold].val_losses_
+
+        else:
+            print(f'No plots with {self.model_name}')
+            return
+
+
+        plt.plot(train_result, label=f'train fold {fold}')
+        plt.plot(val_result, label=f'val fold {fold}')
+        plt.xlabel('Iteration')
+        plt.ylabel('Loss')
         plt.legend()
         plt.show()
-            
-            
+
+
+
+    def get_shap(self, X, fold = 0):
         
-            
+        model = self.models[fold]
+        X = self.dataset.preprocessing(X)
         
+        if self.model_name == 'catboost':
+            pool = Pool(
+                X,
+                cat_features=model.get_cat_feature_indices()
+            )
+
+            values = model.get_feature_importance(
+                data=pool,
+                type='ShapValues'
+            )
+
+        elif self.model_name == 'xgboost':
+            dmatrix = DMatrix(X, enable_categorical=True)
+
+            booster = model.get_booster()
+
+            best_iteration = getattr(model, 'best_iteration', None)
+
+            values = booster.predict(
+                dmatrix,
+                pred_contribs=True,
+                iteration_range=(
+                    0, best_iteration + 1
+                ) if best_iteration is not None else (0, 0)
+            )
+
+        elif self.model_name == 'lgbm':
+            values = model.predict(
+                X,
+                pred_contrib=True
+            )
+
+        else:
+            print(f'SHAP is not supported for {self.model_name}')
+            return
+
+
+        explanation = shap.Explanation(
+            values=values[:, :-1],
+            base_values=values[:, -1],
+            data=X.to_numpy(),
+            feature_names=X.columns.tolist()
+        )
+        
+        shap.plots.beeswarm(explanation)
+        
+        return explanation

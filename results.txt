@@ -219,3 +219,30 @@ DNN_best_state_test | DNN | CV score 0.8019 | 145.7179 s
 DNN_best_state_test | DNN | CV score 0.7908 | 37.5568 s
 DNN_best_state_test | DNN | CV score 0.7908 | 16.8385 s
 DNN_best_state_test | DNN | CV score 0.7908 | 14.3069 s
+DNN_best_state_test | DNN | CV score 0.7908 | 13.0347 s
+tree_playing_parameters | decision_tree | CV score 0.7865 | 0.0991 s
+tree_playing_parameters | decision_tree | CV score 0.8132 | 0.0875 s
+tree_playing_parameters | decision_tree | CV score 0.8187 | 0.0835 s
+tree_playing_parameters | decision_tree | CV score 0.8230 | 0.0816 s
+tree_playing_parameters | decision_tree | CV score 0.8244 | 0.0812 s
+tree_playing_parameters | decision_tree | CV score 0.8187 | 0.0825 s
+tree_playing_parameters | decision_tree | CV score 0.8118 | 0.0772 s
+tree_playing_parameters | decision_tree | CV score 0.8174 | 0.0917 s
+tree_playing_parameters | decision_tree | CV score 0.8132 | 0.0781 s
+random_forest_playing_parameters | random_forest | CV score 0.8398 | 12.1126 s
+random_forest_playing_parameters | random_forest | CV score 0.8356 | 1.4275 s
+random_forest_playing_parameters | random_forest | CV score 0.7837 | 1.4718 s
+random_forest_playing_parameters | random_forest | CV score 0.8160 | 1.4140 s
+random_forest_playing_parameters | random_forest | CV score 0.8384 | 1.4439 s
+playing_parameters | catboost | CV score 0.8272 | 1.4236 s
+playing_parameters | catboost | CV score 0.8272 | 1.3718 s
+playing_parameters | xgboost | CV score 0.8384 | 1.8610 s
+playing_parameters | lgbm | CV score 0.8328 | 1.7213 s
+playing_parameters | lgbm | CV score 0.8328 | 1.6404 s
+playing_parameters | lgbm | CV score 0.8328 | 1.6110 s
+playing_parameters | lgbm | CV score 0.8328 | 1.5729 s
+playing_parameters | lgbm | CV score 0.8328 | 1.5505 s
+playing_parameters | lgbm | CV score 0.8328 | 1.6864 s
+catboost 5000 | catboost | CV score 0.8272 | 1.5173 s
+catboost 5000 | catboost | CV score 0.8272 | 1.4070 s
+catboost 5000 | catboost | CV score 0.8272 | 1.4023 s
