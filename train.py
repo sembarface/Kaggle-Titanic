@@ -1,5 +1,7 @@
 import pickle
 import os
+import time
+import random
 
 
 import numpy as np
@@ -15,6 +17,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import make_pipeline
+from sklearn.model_selection import StratifiedKFold
 
 from sklearn.metrics import accuracy_score
 
@@ -23,7 +26,20 @@ from catboost import CatBoostClassifier
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
 
+import torch
+
 from DNN import DNN
+
+def set_seed(seed):
+    random.seed(seed)
+    np.random.seed(seed)
+
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
 
 
 def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, config):
@@ -163,5 +179,32 @@ def get_preprocessor(model_name, columns, cat_columns):
             SimpleImputer(strategy='most_frequent'),
             OneHotEncoder(handle_unknown='ignore')
         ), cat_columns)
-    ])         
+    ])
+    
+def run_cv(X, y, model_name, config):
+    
+    # Cross-Validation strategy
+    cv = StratifiedKFold(**config.stratified_kfold_parameters)
+    
+    val_scores = []
+     
+    start_time = time.perf_counter()
+    for fold_index, (train_indices, val_indices) in enumerate(cv.split(X, y)):
+        print(f'Validation {fold_index+1} fold started!')
+        
+        X_train, y_train = X.iloc[train_indices], y.iloc[train_indices]
+        X_val, y_val = X.iloc[val_indices], y.iloc[val_indices]
+        
+        
+        set_seed(config.seed)
+        
+        score = train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, config)
+
+        val_scores.append(score)
+    
+    end_time = time.perf_counter()
+    cv_time = end_time - start_time
+    
+    return val_scores, cv_time
+          
     

@@ -1,17 +1,17 @@
 class Config:
     seed = 228
 
-    experiment_name = 'playing_parameters'
+    experiment_name = 'DNN_prikol'
     
-    models_to_train = ['catboost']
+    models_to_train = ['DNN']
     
-    solver_model = 'catboost'
+    solver_model = 'DNN'
     
     use_holdout = True
-    is_train = False
+    is_train = True
     
-    show_plots = False
-    show_shap = False
+    show_plots = True
+    show_shap = True
     
     path_to_experiment = f"experiments/{experiment_name}"
     path_to_data = f"data/train.csv"

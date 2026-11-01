@@ -27,7 +27,7 @@ from DNN import DNN
 from Solver import Solver
 from Dataset import Dataset
 
-from train import  train_one_model
+from train import  run_cv
 
 
 
@@ -81,41 +81,23 @@ def main():
 
     # Train all models with Cross-Validation
     if config.is_train:
-        # Cross-Validation strategy
-        cv = StratifiedKFold(**config.stratified_kfold_parameters)
         
+        cv = StratifiedKFold(**config.stratified_kfold_parameters)
+        dataset = Dataset(data, config.feature_parameters)
+        X, y = dataset.get_X(), dataset.get_y()
     
         for model_name in config.models_to_train:
             
-            val_scores = []
-            start_time = time.perf_counter()
+            val_scores, cv_time = run_cv(X, y, model_name, config)
             
-            for fold_index, (train_indices, val_indices) in enumerate(cv.split(data, data['Survived'])):
-                print(f'Validation {fold_index+1} fold started!')
-                
-                dataset = Dataset(data, config.feature_parameters)
-                X, y = dataset.get_X(), dataset.get_y()
-                
-                X_train, y_train = X.iloc[train_indices], y.iloc[train_indices]
-                X_val, y_val = X.iloc[val_indices], y.iloc[val_indices]
-                
-                
-                set_seed(config.seed)
-                
-                score = train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, config)
-
-                val_scores.append(score)
-            
-            end_time = time.perf_counter()
-            cv_score = sum(val_scores)/len(val_scores)
-            cv_time = end_time - start_time
-            print(f'{model_name} CV mean score = {cv_score:.4f}')
+            mean_cv_score = sum(val_scores) / len(val_scores)
+            print(f'{model_name} CV mean score = {mean_cv_score:.4f}')
             print(f'{model_name} CV scores std = {np.std(val_scores):.4f}')
             print(f'{model_name} CV time = {cv_time:.4f}\n')
             
             # Logging in results.txt
             with open('results.txt', 'a') as f:
-                f.write(f'{config.experiment_name} | {model_name} | CV score {cv_score:.4f} | {cv_time:.4f} s\n')
+                f.write(f'{config.experiment_name} | {model_name} | CV score {mean_cv_score:.4f} | {cv_time:.4f} s\n')
                                     
              
 
