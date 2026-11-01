@@ -7,6 +7,8 @@ import random
 import numpy as np
 import pandas as pd
 
+import optuna
+
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -42,15 +44,12 @@ def set_seed(seed):
 
 
 
-def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, config):
+def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, config, params=None, save_model=True):
   
-    # Path to save models
-    save_dir = os.path.join(config.path_to_experiment, f'{model_name}')
-    os.makedirs(save_dir, exist_ok=True)
-    
     print(f"Training {model_name}!")
     
-    params = config.model_parameters[model_name]
+    if params is None:
+        params = config.model_parameters[model_name]
     
     cat_columns = config.feature_parameters['cat_columns']
     preprocessor = get_preprocessor(model_name, X_train.columns, cat_columns )
@@ -144,14 +143,20 @@ def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, conf
 
 
     # Model saving
-    if model_name != 'DNN':
-        with open(f"{save_dir}/fold_{fold_index}.pickle", "wb") as f:
-            pickle.dump(model, f)
-    
-    elif model_name == 'DNN':
-        checkpoint = model.get_checkpoint()
-        with open(f"{save_dir}/fold_{fold_index}.pickle", "wb") as f:
-            pickle.dump(checkpoint, f)
+    if save_model:
+        
+        # Path to save models
+        save_dir = os.path.join(config.path_to_experiment, f'{model_name}')
+        os.makedirs(save_dir, exist_ok=True)
+        
+        if model_name != 'DNN':
+            with open(f"{save_dir}/fold_{fold_index}.pickle", "wb") as f:
+                pickle.dump(model, f)
+        
+        elif model_name == 'DNN':
+            checkpoint = model.get_checkpoint()
+            with open(f"{save_dir}/fold_{fold_index}.pickle", "wb") as f:
+                pickle.dump(checkpoint, f)
     
     return score
 
@@ -180,8 +185,8 @@ def get_preprocessor(model_name, columns, cat_columns):
             OneHotEncoder(handle_unknown='ignore')
         ), cat_columns)
     ])
-    
-def run_cv(X, y, model_name, config):
+
+def run_cv(X, y, model_name, config, params=None, save_models=True):
     
     # Cross-Validation strategy
     cv = StratifiedKFold(**config.stratified_kfold_parameters)
@@ -198,7 +203,7 @@ def run_cv(X, y, model_name, config):
         
         set_seed(config.seed)
         
-        score = train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, config)
+        score = train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, config, params, save_models)
 
         val_scores.append(score)
     
@@ -206,5 +211,62 @@ def run_cv(X, y, model_name, config):
     cv_time = end_time - start_time
     
     return val_scores, cv_time
-          
-    
+      
+# Optuna    
+def suggest_parameters(trial, search_space):
+    params = {}
+
+    methods = {
+        'int': trial.suggest_int,
+        'float': trial.suggest_float,
+        'categorical': trial.suggest_categorical
+    }
+
+    for model_name, settings in search_space.items():
+        param_type = settings['type']
+        kwargs = {k: v for k, v in settings.items() if k != 'type'}
+
+        params[model_name] = methods[param_type](model_name, **kwargs)
+
+    return params
+
+# Optuna
+def tune_hyperparameters(X, y, model_name, config):
+
+    def objective(trial):
+        suggested_params = suggest_parameters(
+            trial,
+            config.search_spaces[model_name]
+        )
+
+        params = {
+            **config.model_parameters[model_name],
+            **suggested_params
+        }
+
+        scores, _ = run_cv(
+            X, y, model_name, config,
+            params=params,
+            save_models=False
+        )
+
+        return float(np.mean(scores))
+
+    study = optuna.create_study(
+        direction='maximize',
+        sampler=optuna.samplers.TPESampler(
+            seed=config.seed
+        )
+    )
+
+    study.optimize(
+        objective,
+        n_trials=config.optuna_n_trials,
+        show_progress_bar=True,
+        n_jobs=-1,
+    )
+
+    print(f'{model_name} best CV accuracy: {study.best_value:.4f}')
+    print(f'{model_name} best parameters: {study.best_params}')
+
+    return study.best_params

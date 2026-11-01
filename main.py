@@ -1,13 +1,11 @@
-import random
 import os
 import json
 import subprocess
 import time
 
-import shap
+
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 from config import Config
 
@@ -20,28 +18,16 @@ from sklearn.metrics import accuracy_score
 
 
 
-import torch
-
 
 from DNN import DNN
 from Solver import Solver
 from Dataset import Dataset
 
-from train import  run_cv
+from train import  run_cv, tune_hyperparameters
 
 
 
 
-def set_seed(seed):
-    random.seed(seed)
-    np.random.seed(seed)
-
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
-    
 
 def main():
     
@@ -56,11 +42,43 @@ def main():
         X_test = data_test.drop('Survived', axis=1)
         y_test = data_test['Survived']
     
-    # Saving certain experiment config
+
+    
+    # Train all models with Cross-Validation
     if config.is_train:
         
-        experiment_config = config.to_dict()
+        cv = StratifiedKFold(**config.stratified_kfold_parameters)
+        dataset = Dataset(data, config.feature_parameters)
+        X, y = dataset.get_X(), dataset.get_y()
+    
+        # Tune hyperparameters
+        if config.use_optuna:
+            for model_name in config.models_to_train:
+                best_params = tune_hyperparameters(X, y, model_name, config)
+                config.model_parameters = {
+                    **config.model_parameters,
+                    model_name: {
+                        **config.model_parameters[model_name],
+                        **best_params
+                    }
+                }
+            
+        for model_name in config.models_to_train:
+            
+            val_scores, cv_time = run_cv(X, y, model_name, config)
+            
+            mean_cv_score = np.mean(val_scores)
+            print(f'{model_name} CV mean score = {mean_cv_score:.4f}')
+            print(f'{model_name} CV scores std = {np.std(val_scores):.4f}')
+            print(f'{model_name} CV time = {cv_time:.4f}\n')
+            
+            # Logging in results.txt
+            with open('results.txt', 'a') as f:
+                f.write(f'{config.experiment_name} | {model_name} | CV score {mean_cv_score:.4f} | {cv_time:.4f} s\n')
         
+        
+        # Сertain experiment config
+        experiment_config = config.to_dict()
         # Trying to save commit hash
         try:
             experiment_config['git_commit'] = subprocess.check_output(
@@ -75,30 +93,7 @@ def main():
         os.makedirs(config.path_to_experiment, exist_ok=True)
         # Saving experiment config
         with open(f'{config.path_to_experiment}/config.json', 'w') as f:
-            json.dump(experiment_config, f, indent=4)
-    
-    
-
-    # Train all models with Cross-Validation
-    if config.is_train:
-        
-        cv = StratifiedKFold(**config.stratified_kfold_parameters)
-        dataset = Dataset(data, config.feature_parameters)
-        X, y = dataset.get_X(), dataset.get_y()
-    
-        for model_name in config.models_to_train:
-            
-            val_scores, cv_time = run_cv(X, y, model_name, config)
-            
-            mean_cv_score = sum(val_scores) / len(val_scores)
-            print(f'{model_name} CV mean score = {mean_cv_score:.4f}')
-            print(f'{model_name} CV scores std = {np.std(val_scores):.4f}')
-            print(f'{model_name} CV time = {cv_time:.4f}\n')
-            
-            # Logging in results.txt
-            with open('results.txt', 'a') as f:
-                f.write(f'{config.experiment_name} | {model_name} | CV score {mean_cv_score:.4f} | {cv_time:.4f} s\n')
-                                    
+            json.dump(experiment_config, f, indent=4)                        
              
 
     # Pick solver

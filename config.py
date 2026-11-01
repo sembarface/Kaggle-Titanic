@@ -1,17 +1,20 @@
 class Config:
     seed = 228
 
-    experiment_name = 'DNN_prikol'
+    experiment_name = 'optuna_test3'
     
-    models_to_train = ['DNN']
+    models_to_train = ['catboost']
     
-    solver_model = 'DNN'
+    solver_model = 'catboost'
     
     use_holdout = True
     is_train = True
     
-    show_plots = True
-    show_shap = True
+    use_optuna = True
+    optuna_n_trials = 30
+    
+    show_plots = False
+    show_shap = False
     
     path_to_experiment = f"experiments/{experiment_name}"
     path_to_data = f"data/train.csv"
@@ -124,9 +127,194 @@ class Config:
         }
     }
     
+    search_spaces = {
+        'logreg': {
+            'C': {
+                'type': 'float',
+                'low': 1e-3,
+                'high': 100,
+                'log': True
+            },
+        },
+
+        'KNN': {
+            'n_neighbors': {
+                'type': 'int',
+                'low': 3,
+                'high': 25
+            },
+            'weights': {
+                'type': 'categorical',
+                'choices': ['uniform', 'distance']
+            },
+            'p': {
+                'type': 'categorical',
+                'choices': [1, 2]
+            },
+        },
+
+        'decision_tree': {
+            'max_depth': {
+                'type': 'int',
+                'low': 2,
+                'high': 12
+            },
+            'min_samples_leaf': {
+                'type': 'int',
+                'low': 1,
+                'high': 15
+            },
+        },
+
+        'random_forest': {
+            'max_depth': {
+                'type': 'int',
+                'low': 3,
+                'high': 12
+            },
+            'min_samples_leaf': {
+                'type': 'int',
+                'low': 1,
+                'high': 10
+            },
+            'max_features': {
+                'type': 'categorical',
+                'choices': ['sqrt', 0.5, None]
+            },
+        },
+
+        'catboost': {
+            'iterations': {
+                'type': 'int',
+                'low': 300,
+                'high': 600,
+                'step': 100
+            },
+            'depth': {
+                'type': 'int',
+                'low': 3,
+                'high': 7
+            },
+            'learning_rate': {
+                'type': 'float',
+                'low': 0.001,
+                'high': 0.1,
+                'log': True
+            },
+            'l2_leaf_reg': {
+                'type': 'float',
+                'low': 1.0,
+                'high': 10.0,
+                'log': True
+            },
+            'random_strength': {
+                'type': 'float',
+                'low': 0.0,
+                'high': 2.0
+            },
+        },
+
+        'xgboost': {
+            'n_estimators': {
+                'type': 'int',
+                'low': 300,
+                'high': 600,
+                'step': 100
+            },
+            'max_depth': {
+                'type': 'int',
+                'low': 2,
+                'high': 6
+            },
+            'learning_rate': {
+                'type': 'float',
+                'low': 0.001,
+                'high': 0.1,
+                'log': True
+            },
+            'min_child_weight': {
+                'type': 'int',
+                'low': 1,
+                'high': 10
+            },
+            'reg_lambda': {
+                'type': 'float',
+                'low': 0.1,
+                'high': 10.0,
+                'log': True
+            },
+        },
+
+        'lgbm': {
+            'n_estimators': {
+                'type': 'int',
+                'low': 300,
+                'high': 600,
+                'step': 100
+            },
+            'num_leaves': {
+                'type': 'int',
+                'low': 5,
+                'high': 31
+            },
+            'min_child_samples': {
+                'type': 'int',
+                'low': 5,
+                'high': 40
+            },
+            'learning_rate': {
+                'type': 'float',
+                'low': 0.001,
+                'high': 0.1,
+                'log': True
+            },
+            'reg_lambda': {
+                'type': 'float',
+                'low': 0.0,
+                'high': 5.0
+            },
+        },
+
+        'DNN': {
+            'learning_rate': {
+                'type': 'float',
+                'low': 1e-4,
+                'high': 1e-1,
+                'log': True
+            },
+            'batch_size': {
+                'type': 'categorical',
+                'choices': [16, 32, 64]
+            },
+            'epochs': {
+                'type': 'int',
+                'low': 100,
+                'high': 300,
+                'step': 100
+            },
+            "optimizer_name": {
+                'type': 'categorical',
+                'choices': ["Adam", "SGD"]
+            }
+        },
+
+        'stacking_knn_tree_logreg': {
+            'cv': {
+                'type': 'categorical',
+                'choices': [3, 5]
+            },
+            'passthrough': {
+                'type': 'categorical',
+                'choices': [False, True]
+            },
+        },
+    }
+    
     def to_dict(self):
         return {
             'experiment_name': self.experiment_name,
+            'use_optuna': self.use_optuna,
+            'optuna_n_trials': self.optuna_n_trials if self.use_optuna else None,
             'seed': self.seed,
             'feature_parameters': self.feature_parameters,
             'model_parameters': {
