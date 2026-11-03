@@ -2,14 +2,12 @@ import pickle
 import os
 import json
 
-import shap
 import numpy as np
 import pandas as pd
 
-
 import matplotlib.pyplot as plt
-import seaborn as sns
-sns.set_theme(style='darkgrid')
+
+import shap
 
 from catboost import Pool
 from xgboost import DMatrix
@@ -21,7 +19,9 @@ from DNN import DNN
 
 # Inference
 class Solver:
+    """Load trained models and perform ensemble inference."""
     def __init__(self, path_to_experiment, model_name):
+        """Load the experiment configuration and saved fold models."""
         
         self.model_name = model_name
         
@@ -52,7 +52,9 @@ class Solver:
                     
                 self.models.append(model)
     
-    def predict_proba(self, X):
+    def predict_proba(self, X: pd.DataFrame):
+        """Average class probabilities across cross-validation models."""
+        
         X = self.dataset.preprocessing(X)
         probabilities = []
         for model in self.models:
@@ -62,13 +64,16 @@ class Solver:
         
         return mean_probabilities
 
-    def predict(self, X):
+    def predict(self, X: pd.DataFrame):
+        """Predict class labels using averaged model probabilities."""
+        
         mean_probabilities = self.predict_proba(X)
         mean_predictions = np.argmax(mean_probabilities, axis=1)
         
         return mean_predictions
     
     def get_plots(self, fold =0):
+        """Plot training and validation loss for a selected fold."""
 
         if self.model_name == 'catboost':
             train_result = self.models[fold].get_evals_result()['learn']['Logloss']
@@ -90,7 +95,6 @@ class Solver:
             print(f'No plots with {self.model_name}')
             return
 
-
         plt.plot(train_result, label=f'train fold {fold}')
         plt.plot(val_result, label=f'val fold {fold}')
         plt.xlabel('Iteration')
@@ -101,6 +105,7 @@ class Solver:
 
 
     def get_shap(self, X, fold = 0):
+        """Compute and visualize SHAP values for a selected model fold."""
         
         model = self.models[fold]
         X = self.dataset.preprocessing(X)

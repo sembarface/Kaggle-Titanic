@@ -3,12 +3,10 @@ import os
 import time
 import random
 
-
 import numpy as np
 import pandas as pd
 
 import optuna
-
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -23,7 +21,6 @@ from sklearn.model_selection import StratifiedKFold
 
 from sklearn.metrics import accuracy_score
 
-
 from catboost import CatBoostClassifier
 from xgboost import XGBClassifier
 from lightgbm import LGBMClassifier
@@ -33,6 +30,7 @@ import torch
 from DNN import DNN
 
 def set_seed(seed):
+    """Set random seeds."""
     random.seed(seed)
     np.random.seed(seed)
 
@@ -43,9 +41,9 @@ def set_seed(seed):
     torch.backends.cudnn.benchmark = False
 
 
-
 def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, config, params=None, save_model=True):
-  
+    """Train and evaluate a model on one fold and optionally save it."""
+    
     print(f"Training {model_name}!")
     
     if params is None:
@@ -162,6 +160,7 @@ def train_one_model(X_train, y_train, X_val, y_val, model_name, fold_index, conf
 
 
 def get_preprocessor(model_name, columns, cat_columns):
+    """Build a preprocessing pipeline for the specified model."""
     
     if model_name in ['catboost', 'xgboost', 'lgbm', 'DNN']:
         return None
@@ -186,7 +185,8 @@ def get_preprocessor(model_name, columns, cat_columns):
         ), cat_columns)
     ])
 
-def run_cv(X, y, model_name, config, params=None, save_models=True):
+def run_cv(X: pd.DataFrame, y: pd.Series, model_name, config, params=None, save_models=True):
+    """Evaluate a model using cross-validation."""
     
     # Cross-Validation strategy
     cv = StratifiedKFold(**config.stratified_kfold_parameters)
@@ -214,8 +214,10 @@ def run_cv(X, y, model_name, config, params=None, save_models=True):
       
 # Optuna    
 def suggest_parameters(trial, search_space):
+    """Sample hyperparameters from the search space using Optuna."""
+    
     params = {}
-
+    
     methods = {
         'int': trial.suggest_int,
         'float': trial.suggest_float,
@@ -232,8 +234,10 @@ def suggest_parameters(trial, search_space):
 
 # Optuna
 def tune_hyperparameters(X, y, model_name, config):
+    """Optimize model hyperparameters using cross-validation."""
 
     def objective(trial):
+        """Evaluate a trial using mean cross-validation accuracy."""
         suggested_params = suggest_parameters(
             trial,
             config.search_spaces[model_name]
@@ -263,7 +267,7 @@ def tune_hyperparameters(X, y, model_name, config):
         objective,
         n_trials=config.optuna_n_trials,
         show_progress_bar=True,
-        n_jobs=-1,
+        n_jobs=1,
     )
 
     print(f'{model_name} best CV accuracy: {study.best_value:.4f}')

@@ -258,3 +258,27 @@ optuna_test2 | DNN | CV score 0.8146 | 82.9597 s
 optuna_test3 | catboost | CV score 0.8385 | 0.9309 s
 DNN batch 64 | catboost | CV score 0.8272 | 1.3865 s
 DNN batch 64 | DNN | CV score 0.7586 | 9.2559 s
+optuna_test3_njobs 1 | catboost | CV score 0.8328 | 0.6738 s
+optuna_test3_njobs -1 | catboost | CV score 0.8399 | 0.8731 s
+optuna_test3_njobs -1 | catboost | CV score 0.8398 | 0.7220 s
+optuna_test3_njobs 1 | catboost | CV score 0.8328 | 0.6863 s
+optuna_test3_njobs 1 thread | catboost | CV score 0.8328 | 0.6914 s
+optuna_test3_njobs -1 thred | catboost | CV score 0.8384 | 0.6357 s
+DNN cpu test | catboost | CV score 0.8272 | 1.3527 s
+DNN cpu test | DNN | CV score 0.7908 | 10.6492 s
+DNN gpu test | DNN | CV score 0.7908 | 13.1237 s
+catboost baseline submit | catboost | CV score 0.8305 | 1.7659 s
+catboost baseline submit | catboost | CV score 0.8305 | 1.6236 s
+catboost baseline submit | catboost | CV score 0.8361 | 1.0627 s
+catboost nofare submit | catboost | CV score 0.8294 | 4.4724 s
+xgboost submit | xgboost | CV score 0.8361 | 1.0341 s
+random_forest submit | random_forest | CV score 0.8361 | 1.4339 s
+DNN submit | DNN | CV score 0.8002 | 13.8612 s
+DNN submit | logreg | CV score 0.8069 | 0.0785 s
+DNN submit | decision_tree | CV score 0.8249 | 0.0724 s
+KNN submit | KNN | CV score 0.8170 | 0.0796 s
+KNN submit | KNN | CV score 0.8170 | 0.0827 s
+KNN | KNN | CV score 0.7845 | 0.0713 s
+random_forest | random_forest | CV score 0.8249 | 1.4055 s
+random_forest | random_forest | CV score 0.8249 | 1.4200 s
+random_forest | random_forest | CV score 0.8249 | 1.5722 s

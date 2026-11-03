@@ -7,7 +7,6 @@ from tqdm import tqdm
 
 import matplotlib.pyplot as plt
 
-
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import make_pipeline
@@ -19,7 +18,6 @@ from torch.utils.data import TensorDataset, DataLoader
 
 from torch.optim import Adam, SGD
 from torch.optim.lr_scheduler import CosineAnnealingLR
-
 
 
 class DNN(nn.Module):
@@ -35,8 +33,8 @@ class DNN(nn.Module):
         self.optimizer_name = optimizer_name
         
         
-        
     def _build_model(self, input_size):
+        """Build model for the custom input size."""
         
         self.mlp = nn.Sequential(
             nn.Linear(input_size, 5),
@@ -49,11 +47,13 @@ class DNN(nn.Module):
         
         
     def forward(self, x):
+        """Perform the forward pass through the network."""
         out = self.mlp(x)
         return out
     
     def fit(self, X_train: pd.DataFrame, y_train: pd.DataFrame, 
             X_val: pd.DataFrame, y_val: pd.DataFrame, feature_parameters, verbose=False):
+        """Train the network and restore the best validation weights."""
         
         categorical = feature_parameters['cat_columns']
 
@@ -61,7 +61,6 @@ class DNN(nn.Module):
             col for col in X_train.columns
             if col not in categorical
         ]
-
 
         self.preprocessor = ColumnTransformer([
             ('num', make_pipeline(
@@ -77,7 +76,6 @@ class DNN(nn.Module):
                 )
             ), categorical)
         ])
-        
         
         self.preprocessor.fit(X_train)
         
@@ -100,7 +98,6 @@ class DNN(nn.Module):
         self.to(self.device)
         
 
-        
         loss_function = torch.nn.BCELoss()
         optimizer = get_optimizer(self.optimizer_name, params=self.parameters(), lr=self.learning_rate)
         scheduler = CosineAnnealingLR(optimizer, T_max=self.epochs)
@@ -174,8 +171,9 @@ class DNN(nn.Module):
         return self
     
     def predict_proba(self, X: pd.DataFrame):
-        self.eval()
+        """Predict class probabilities for input samples."""
         
+        self.eval()
         with torch.no_grad():
             
             X_tensor = torch.tensor(self.preprocessor.transform(X), dtype=torch.float32).to(self.device)
@@ -184,6 +182,7 @@ class DNN(nn.Module):
             return np.hstack([1- probabilities, probabilities])
     
     def predict(self, X: pd.DataFrame):
+        """Predict class labels for input samples."""
         
         probabilities = self.predict_proba(X)
         predictions = np.argmax(probabilities, axis=1)
@@ -191,6 +190,8 @@ class DNN(nn.Module):
         return predictions
     
     def get_checkpoint(self):
+        """Create a checkpoint containing model weights and training history."""
+        
         checkpoint = {
             'model_state_dict': self.state_dict(),
             'input_size': self.input_size,
@@ -202,6 +203,8 @@ class DNN(nn.Module):
         return checkpoint
     
     def load_checkpoint(self, checkpoint):
+        """Restore the model from a saved checkpoint."""
+        
         self.input_size = checkpoint['input_size']
         self._build_model(self.input_size)
         self.load_state_dict(checkpoint['model_state_dict'])
@@ -214,6 +217,8 @@ class DNN(nn.Module):
 
 
 def get_optimizer(optimizer_name, params, lr):
+    """Create an optimizer."""
+    
     if optimizer_name == 'Adam':
         optimizer = Adam(params, lr=lr)
     

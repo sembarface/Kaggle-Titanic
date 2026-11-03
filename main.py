@@ -1,31 +1,20 @@
 import os
 import json
 import subprocess
-import time
-
 
 import numpy as np
 import pandas as pd
 
-from config import Config
-
-
-
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import StratifiedKFold
 
 from sklearn.metrics import accuracy_score
 
-
-
-
-from DNN import DNN
 from Solver import Solver
 from Dataset import Dataset
 
 from train import  run_cv, tune_hyperparameters
 
-
+from config import Config
 
 
 
@@ -47,7 +36,6 @@ def main():
     # Train all models with Cross-Validation
     if config.is_train:
         
-        cv = StratifiedKFold(**config.stratified_kfold_parameters)
         dataset = Dataset(data, config.feature_parameters)
         X, y = dataset.get_X(), dataset.get_y()
     
@@ -96,9 +84,9 @@ def main():
             json.dump(experiment_config, f, indent=4)                        
              
 
-    # Pick solver
-    
+    # Test score
     if config.use_holdout:
+        # Pick solver
         solver = Solver(config.path_to_experiment, config.solver_model)
         pred = solver.predict(X_test)
         print(f'{solver.model_name} test accurasy score = ', accuracy_score(pred, y_test))
@@ -107,16 +95,24 @@ def main():
         if config.show_plots:
             solver.get_plots()
             
-        
         # Shap beeswarm on train samples
         if config.show_shap:
             X = data.drop('Survived', axis=1)
             solver.get_shap(X)
-
-
     
     
-    
+    # Kaggle submission
+    if config.get_submission:
+        kaggle_test = pd.read_csv('data/test.csv', index_col='PassengerId')
+        # Pick solver
+        solver = Solver(config.path_to_experiment, config.solver_model)
+        pred = solver.predict(kaggle_test)
+        submission = pd.DataFrame({
+            'PassengerId': kaggle_test.index,
+            'Survived': pred
+        })
+        submission.to_csv('submission.csv', index=False)
+        
 
 if __name__ == '__main__':
     main()

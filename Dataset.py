@@ -2,7 +2,7 @@ import pandas as pd
 
 
 class Dataset:
-    
+    """Manage dataset features, target labels, and preprocessing."""
     def __init__(self, data: pd.DataFrame = None, feature_parameters: dict =None):
         
         self.feature_parameters = feature_parameters
@@ -14,6 +14,7 @@ class Dataset:
             
 
     def preprocessing(self, features: pd.DataFrame) -> pd.DataFrame:
+        """Apply feature engineering and categorical preprocessing."""
         
         params = self.feature_parameters
         

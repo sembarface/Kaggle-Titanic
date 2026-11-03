@@ -1,16 +1,19 @@
 class Config:
+    """Store experiment settings, model parameters, and search spaces."""
+    
     seed = 228
 
-    experiment_name = 'optuna_test3'
+    experiment_name = 'random_forest'
     
-    models_to_train = ['catboost']
+    models_to_train = ['random_forest']
     
-    solver_model = 'catboost'
+    solver_model = 'random_forest'
+    get_submission = True
     
-    use_holdout = True
+    use_holdout = False
     is_train = True
     
-    use_optuna = True
+    use_optuna = False
     optuna_n_trials = 30
     
     show_plots = False
@@ -113,7 +116,7 @@ class Config:
         },
 
         'DNN': {
-            'device': 'cuda',
+            'device': 'cpu',
             'output_size': 1,
             'epochs': 100,
             'batch_size': 32,
@@ -311,6 +314,8 @@ class Config:
     }
     
     def to_dict(self):
+        """Convert the experiment configuration into a dictionary."""
+        
         return {
             'experiment_name': self.experiment_name,
             'use_optuna': self.use_optuna,
