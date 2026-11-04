@@ -20,6 +20,19 @@ class Dataset:
         
         df = features.copy()
         
+        # New features
+        if params['add_title']:
+            df['Title'] = df['Name'].str.extract(r',\s*([^.]*)\.')[0].str.strip()
+            df['Title'] = df['Title'].replace({
+                'Mlle': 'Miss',
+                'Ms': 'Miss',
+                'Mme': 'Mrs'
+            })
+            df['Title'] = df['Title'].where(
+                df['Title'].isin(['Mr', 'Mrs', 'Miss', 'Master']),
+                'Rare'
+            )
+            
         if params['add_family_size']:
             df['FamilySize'] = df['SibSp'] + df['Parch'] + 1
         

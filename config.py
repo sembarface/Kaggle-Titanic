@@ -3,14 +3,25 @@ class Config:
     
     seed = 228
 
-    experiment_name = 'random_forest'
+    experiment_name = 'DNN baseline'
     
-    models_to_train = ['random_forest']
+    models_to_train = [
+        # 'logreg',
+        # 'KNN',
+        # 'decision_tree',
+        # 'random_forest',
+        # 'catboost',
+        # 'xgboost',
+        # 'lgbm',
+        'DNN',
+        # 'stacking_knn_tree_logreg'
+    ]
     
-    solver_model = 'random_forest'
+    solver_model = 'DNN'
     get_submission = True
     
     use_holdout = False
+
     is_train = True
     
     use_optuna = False
@@ -24,8 +35,9 @@ class Config:
     
     
     feature_parameters = {
-        'cat_columns': ['Sex', 'Embarked'],
+        'cat_columns': ['Sex', 'Embarked', 'Title'],
         'drop_columns': ['Name', 'Ticket', 'Cabin'],
+        'add_title': True,
         'add_family_size': True,
         'add_is_alone': True,
     }
@@ -120,7 +132,7 @@ class Config:
             'output_size': 1,
             'epochs': 100,
             'batch_size': 32,
-            'learning_rate': 3e-4,
+            'learning_rate': 3e-2,
             'optimizer_name': 'Adam',
         },
         

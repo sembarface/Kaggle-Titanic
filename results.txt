@@ -282,3 +282,29 @@ KNN | KNN | CV score 0.7845 | 0.0713 s
 random_forest | random_forest | CV score 0.8249 | 1.4055 s
 random_forest | random_forest | CV score 0.8249 | 1.4200 s
 random_forest | random_forest | CV score 0.8249 | 1.5722 s
+title new feature | logreg | CV score 0.8238 | 0.1147 s
+title new feature | KNN | CV score 0.7879 | 1.5276 s
+title new feature | decision_tree | CV score 0.8136 | 0.1024 s
+title new feature | random_forest | CV score 0.8316 | 1.4777 s
+title new feature | catboost | CV score 0.8395 | 13.0391 s
+title new feature | xgboost | CV score 0.8282 | 0.7920 s
+title new feature | lgbm | CV score 0.8339 | 0.3830 s
+title new feature | DNN | CV score 0.8137 | 11.2274 s
+title new feature | stacking_knn_tree_logreg | CV score 0.8260 | 1.6995 s
+NO title new feature | logreg | CV score 0.8058 | 0.0816 s
+NO title new feature | KNN | CV score 0.7845 | 0.0708 s
+NO title new feature | decision_tree | CV score 0.8069 | 0.0615 s
+NO title new feature | random_forest | CV score 0.8249 | 1.5251 s
+NO title new feature | catboost | CV score 0.8305 | 1.5170 s
+NO title new feature | xgboost | CV score 0.8260 | 0.6313 s
+NO title new feature | lgbm | CV score 0.8339 | 1.6150 s
+NO title new feature | DNN | CV score 0.8002 | 11.5962 s
+NO title new feature | stacking_knn_tree_logreg | CV score 0.8159 | 1.0412 s
+title new feature catboost tuned | catboost | CV score 0.8361 | 1.0608 s
+no fare title new feature catboost tuned | catboost | CV score 0.8294 | 4.9314 s
+title new feature catboost tuned | catboost | CV score 0.8361 | 3.5466 s
+title new feature catboost tuned | catboost | CV score 0.8406 | 1.5260 s
+title new feature catboost tuned | catboost | CV score 0.8440 | 1.1190 s
+DNN optuna | DNN | CV score 0.8428 | 10.0875 s
+DNN 2 layer | DNN | CV score 0.8440 | 24.1198 s
+DNN baseline | DNN | CV score 0.8384 | 11.5181 s
