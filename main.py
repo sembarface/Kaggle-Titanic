@@ -19,6 +19,7 @@ from config import Config
 
 
 def main():
+    """Run the ML pipeline for training, evaluation, and inference."""
     
     config = Config()
     

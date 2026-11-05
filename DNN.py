@@ -21,8 +21,11 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 
 
 class DNN(nn.Module):
-    def __init__(self, output_size=1, epochs=100, device='cuda', batch_size=32, 
+    """Implement a neural network for binary classification."""
+    def __init__(self, output_size=1, epochs=100, device='cpu', batch_size=32, 
                 learning_rate=3e-4, optimizer_name='Adam'):
+        """Initialize the neural network and training parameters."""
+        
         super().__init__()
         
         self.output_size = output_size
@@ -162,7 +165,7 @@ class DNN(nn.Module):
             scheduler.step()
         
         if verbose:
-            print(f'Best epoch: {self.best_epoch}')
+            print(f'Best epoch: {self.best_epoch_}')
             plt.plot(self.train_losses_,label='train')
             plt.plot(self.val_losses_, label='val')
             plt.legend()
