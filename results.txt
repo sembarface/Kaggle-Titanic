@@ -1,310 +1,47 @@
-default | logreg | CV score 0.8076 | 0.0436 s
-default | KNN | CV score 0.8061 | 0.0348 s
-default | decision_tree | CV score 0.7752 | 0.0229 s
-default | random_forest | CV score 0.8160 | 0.4828 s
-default | catboost | CV score 0.8426 | 5.9656 s
-default | logreg | CV score 0.8076 | 0.0545 s
-default | KNN | CV score 0.8061 | 0.0313 s
-default | decision_tree | CV score 0.7752 | 0.0247 s
-default | random_forest | CV score 0.8160 | 0.5053 s
-default | catboost | CV score 0.8426 | 6.0423 s
-default | logreg | CV score 0.8076 | 0.0430 s
-default | KNN | CV score 0.8061 | 0.0316 s
-default | decision_tree | CV score 0.7752 | 0.0265 s
-default | random_forest | CV score 0.8160 | 0.4937 s
-default | catboost | CV score 0.8426 | 5.8834 s
-default | logreg | CV score 0.8076 | 0.0477 s
-default | KNN | CV score 0.8061 | 0.0342 s
-default | decision_tree | CV score 0.7752 | 0.0242 s
-default | random_forest | CV score 0.8160 | 0.4766 s
-default | catboost | CV score 0.8426 | 6.0153 s
-default | lgbm | CV score 0.8314 | 1.5840 s
-default | DNN | CV score 0.7739 | 15.8449 s
-default | DNN | CV score 0.7851 | 15.9965 s
-default | logreg | CV score 0.8076 | 0.0409 s
-default | KNN | CV score 0.8061 | 0.0334 s
-default | decision_tree | CV score 0.7752 | 0.0239 s
-default | random_forest | CV score 0.8160 | 0.4883 s
-default | catboost | CV score 0.8426 | 6.2625 s
-default | xgboost | CV score 0.8216 | 0.9153 s
-default | lgbm | CV score 0.8314 | 1.6165 s
-default | DNN | CV score 0.7850 | 15.0647 s
-default | DNN | CV score 0.7893 | 15.2522 s
-default | logreg | CV score 0.8076 | 0.0381 s
-default | KNN | CV score 0.8061 | 0.0347 s
-default | decision_tree | CV score 0.7752 | 0.0327 s
-default | random_forest | CV score 0.8160 | 0.4893 s
-default | catboost | CV score 0.8426 | 6.9049 s
-default | xgboost | CV score 0.8216 | 2.5316 s
-default | lgbm | CV score 0.8314 | 2.7014 s
-default | DNN | CV score 0.7725 | 22.1494 s
-default | logreg | CV score 0.8076 | 0.0385 s
-default | KNN | CV score 0.8061 | 0.0404 s
-default | decision_tree | CV score 0.7752 | 0.0321 s
-default | random_forest | CV score 0.8160 | 0.4785 s
-default | catboost | CV score 0.8426 | 6.9410 s
-default | xgboost | CV score 0.8216 | 2.2690 s
-default | lgbm | CV score 0.8314 | 1.7965 s
-default | DNN | CV score 0.7725 | 63.3217 s
-default | DNN | CV score 0.7655 | 16.7065 s
-default | logreg | CV score 0.8076 | 0.0386 s
-default | KNN | CV score 0.8061 | 0.0352 s
-default | decision_tree | CV score 0.7752 | 0.0294 s
-default | random_forest | CV score 0.8160 | 0.5016 s
-default | catboost | CV score 0.8426 | 6.0530 s
-default | xgboost | CV score 0.8216 | 1.0603 s
-default | lgbm | CV score 0.8314 | 1.5167 s
-default | DNN | CV score 0.7655 | 15.5997 s
-default | logreg | CV score 0.8076 | 0.0360 s
-default | KNN | CV score 0.8061 | 0.0343 s
-default | decision_tree | CV score 0.7752 | 0.0281 s
-default | random_forest | CV score 0.8160 | 0.5080 s
-default | catboost | CV score 0.8426 | 6.5357 s
-default | xgboost | CV score 0.8216 | 2.2902 s
-default | lgbm | CV score 0.8314 | 1.7477 s
-default | DNN | CV score 0.7598 | 21.1207 s
-default | logreg | CV score 0.8076 | 0.0392 s
-default | KNN | CV score 0.8061 | 0.0312 s
-default | decision_tree | CV score 0.7752 | 0.0288 s
-default | random_forest | CV score 0.8160 | 0.4986 s
-default | catboost | CV score 0.8426 | 5.8881 s
-default | xgboost | CV score 0.8216 | 2.2659 s
-default | lgbm | CV score 0.8314 | 1.8271 s
-default | DNN | CV score 0.7598 | 14.1961 s
-default_tuned | logreg | CV score 0.8076 | 0.0349 s
-default_tuned | KNN | CV score 0.7907 | 0.0305 s
-default_tuned | decision_tree | CV score 0.8146 | 0.0244 s
-default_tuned | random_forest | CV score 0.8286 | 1.5522 s
-default_tuned | catboost | CV score 0.8300 | 2.4300 s
-default_tuned | xgboost | CV score 0.8384 | 5.0414 s
-default_tuned | lgbm | CV score 0.8356 | 2.0278 s
-default_tuned | DNN | CV score 0.7837 | 15.2097 s
-default_tuned | catboost | CV score 0.8342 | 2.1069 s
-default_tuned | catboost | CV score 0.8300 | 14.7406 s
-default_tuned | catboost | CV score 0.8342 | 2.1244 s
-default_tuned | catboost | CV score 0.8342 | 2.0076 s
-default_tuned | catboost | CV score 0.8342 | 2.2141 s
-default_tuned | catboost | CV score 0.8342 | 2.0307 s
-default_tuned_noFare | logreg | CV score 0.8076 | 0.0430 s
-default_tuned_noFare | KNN | CV score 0.7991 | 0.0358 s
-default_tuned_noFare | decision_tree | CV score 0.8174 | 0.0263 s
-default_tuned_noFare | random_forest | CV score 0.8300 | 1.5627 s
-default_tuned_noFare | catboost | CV score 0.8384 | 2.2318 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 3.4483 s
-default_tuned_noFare | lgbm | CV score 0.8202 | 1.8366 s
-default_tuned_noFare | DNN | CV score 0.7614 | 15.1384 s
-default_tuned_noFare | logreg | CV score 0.8076 | 0.0425 s
-default_tuned_noFare | KNN | CV score 0.7991 | 0.0343 s
-default_tuned_noFare | decision_tree | CV score 0.8174 | 0.0261 s
-default_tuned_noFare | random_forest | CV score 0.8300 | 2.1986 s
-default_tuned_noFare | catboost | CV score 0.8384 | 2.8536 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 6.2783 s
-default_tuned_noFare | lgbm | CV score 0.8202 | 2.5489 s
-default_tuned_noFare | DNN | CV score 0.7614 | 18.5927 s
-default_tuned_noFare | logreg | CV score 0.8076 | 0.0361 s
-default_tuned_noFare | KNN | CV score 0.7991 | 0.0383 s
-default_tuned_noFare | decision_tree | CV score 0.8174 | 0.0226 s
-default_tuned_noFare | random_forest | CV score 0.8300 | 1.5680 s
-default_tuned_noFare | catboost | CV score 0.8384 | 2.2103 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 4.6855 s
-default_tuned_noFare | lgbm | CV score 0.8202 | 1.8243 s
-default_tuned_noFare | DNN | CV score 0.7614 | 14.0021 s
-default_tuned_noFare | logreg | CV score 0.8076 | 0.0388 s
-default_tuned_noFare | KNN | CV score 0.7991 | 0.0348 s
-default_tuned_noFare | decision_tree | CV score 0.8174 | 0.0267 s
-default_tuned_noFare | random_forest | CV score 0.8300 | 1.5405 s
-default_tuned_noFare | catboost | CV score 0.8384 | 1.8172 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 3.2981 s
-default_tuned_noFare | lgbm | CV score 0.8202 | 0.4911 s
-default_tuned_noFare | DNN | CV score 0.7614 | 15.8300 s
-default_tuned_noFare | logreg | CV score 0.8076 | 0.0389 s
-default_tuned_noFare | KNN | CV score 0.7991 | 0.0340 s
-default_tuned_noFare | decision_tree | CV score 0.8174 | 0.0248 s
-default_tuned_noFare | random_forest | CV score 0.8300 | 1.4676 s
-default_tuned_noFare | catboost | CV score 0.8384 | 2.5189 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 1.3908 s
-default_tuned_noFare | lgbm | CV score 0.8202 | 1.7399 s
-default_tuned_noFare | DNN | CV score 0.7614 | 12.7177 s
-default_tuned_noFare | logreg | CV score 0.8076 | 0.0329 s
-default_tuned_noFare | KNN | CV score 0.7991 | 0.0309 s
-default_tuned_noFare | decision_tree | CV score 0.8174 | 0.0235 s
-default_tuned_noFare | logreg | CV score 0.8076 | 0.0379 s
-default_tuned_noFare | KNN | CV score 0.7991 | 0.0374 s
-default_tuned_noFare | decision_tree | CV score 0.8174 | 0.0258 s
-default_tuned_noFare | random_forest | CV score 0.8300 | 1.4728 s
-default_tuned_noFare | catboost | CV score 0.8384 | 1.8547 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 1.3676 s
-default_tuned_noFare | lgbm | CV score 0.8202 | 1.7510 s
-default_tuned_noFare | DNN | CV score 0.7614 | 14.9321 s
-default_tuned_noFare | logreg | CV score 0.8076 | 0.0345 s
-default_tuned_noFare | KNN | CV score 0.7991 | 0.0336 s
-default_tuned_noFare | decision_tree | CV score 0.8174 | 0.0252 s
-default_tuned_noFare | random_forest | CV score 0.8300 | 1.4536 s
-default_tuned_noFare | catboost | CV score 0.8384 | 1.8494 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 1.3983 s
-default_tuned_noFare | lgbm | CV score 0.8202 | 1.7108 s
-default_tuned_noFare | DNN | CV score 0.7614 | 14.0580 s
-default_tuned_noFare | logreg | CV score 0.8076 | 0.0412 s
-default_tuned_noFare | KNN | CV score 0.7991 | 0.0323 s
-default_tuned_noFare | decision_tree | CV score 0.8174 | 0.0254 s
-default_tuned_noFare | random_forest | CV score 0.8300 | 1.5305 s
-default_tuned_noFare | catboost | CV score 0.8384 | 1.9552 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 1.4312 s
-default_tuned_noFare | lgbm | CV score 0.8202 | 1.6691 s
-default_tuned_noFare | DNN | CV score 0.7614 | 13.6717 s
-default_tuned_noFare | logreg | CV score 0.8076 | 0.0359 s
-default_tuned_noFare | KNN | CV score 0.7991 | 0.0315 s
-default_tuned_noFare | decision_tree | CV score 0.8174 | 0.0251 s
-default_tuned_noFare | random_forest | CV score 0.8300 | 1.4665 s
-default_tuned_noFare | catboost | CV score 0.8384 | 1.8975 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 1.4859 s
-default_tuned_noFare | lgbm | CV score 0.8202 | 1.6519 s
-default_tuned_noFare | DNN | CV score 0.7614 | 13.4041 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 1.5778 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 0.9261 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 0.9663 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 1.4692 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 1.6142 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 0.9806 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 1.5060 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 0.9868 s
-default_tuned_noFare | xgboost | CV score 0.8188 | 1.1225 s
-default_tuned_no | logreg | CV score 0.8076 | 0.0381 s
-default_tuned_no | KNN | CV score 0.7907 | 0.0341 s
-default_tuned_no | decision_tree | CV score 0.8146 | 0.0269 s
-default_tuned_no | random_forest | CV score 0.8286 | 1.5541 s
-default_tuned_no | catboost | CV score 0.8342 | 2.4022 s
-default_tuned_no | xgboost | CV score 0.8384 | 1.0030 s
-default_tuned_no | lgbm | CV score 0.8356 | 1.7648 s
-default_tuned_no | DNN | CV score 0.7837 | 14.3894 s
-default_tuned_no | logreg | CV score 0.8076 | 0.0401 s
-default_tuned_no | KNN | CV score 0.7907 | 0.0343 s
-default_tuned_no | decision_tree | CV score 0.8146 | 0.0288 s
-default_tuned_no | random_forest | CV score 0.8286 | 1.5253 s
-default_tuned_no | catboost | CV score 0.8342 | 2.3400 s
-default_tuned_no | xgboost | CV score 0.8384 | 1.0270 s
-default_tuned_no | lgbm | CV score 0.8356 | 1.8017 s
-default | logreg | CV score 0.8076 | 0.0907 s
-default | KNN | CV score 0.7907 | 0.0547 s
-default | decision_tree | CV score 0.8146 | 0.0437 s
-default | random_forest | CV score 0.8286 | 1.4753 s
-default | catboost | CV score 0.8342 | 2.2632 s
-default | xgboost | CV score 0.8384 | 2.9569 s
-default | lgbm | CV score 0.8356 | 1.8522 s
-default | DNN | CV score 0.7626 | 13.7821 s
-catboost_error_test | catboost | CV score 0.8286 | 23.9977 s
-catboost_error_test | catboost | CV score 0.8258 | 15.5166 s
-catboost_error_test | catboost | CV score 0.8258 | 15.2410 s
-catboost_error_test | catboost | CV score 0.8286 | 32.8025 s
-catboost_error_test | catboost | CV score 0.8286 | 24.7778 s
-catboost_error_test | catboost | CV score 0.8314 | 2.1985 s
-testiruy | logreg | CV score 0.8005 | 0.1011 s
-testiruy | KNN | CV score 0.7921 | 0.0823 s
-testiruy | decision_tree | CV score 0.8146 | 0.0739 s
-testiruy | random_forest | CV score 0.8272 | 1.5518 s
-testiruy | catboost | CV score 0.8314 | 2.3831 s
-testiruy | xgboost | CV score 0.8356 | 2.8838 s
-testiruy | lgbm | CV score 0.8356 | 1.8587 s
-testiruy | DNN | CV score 0.8075 | 13.4539 s
-stacking_first_test | stacking | CV score 0.8230 | 1.0080 s
-stacking_random_forest_test | stacking | CV score 0.8117 | 8.9144 s
-DNN_more_layers | DNN | CV score 0.8047 | 17.1125 s
-DNN_more_layers | DNN | CV score 0.7977 | 16.5850 s
-DNN_more_layers | DNN | CV score 0.7921 | 17.0624 s
-DNN_more_layers | DNN | CV score 0.7992 | 36.5529 s
-DNN_more_layers | DNN | CV score 0.6166 | 27.7002 s
-DNN_best_state_test | DNN | CV score 0.7908 | 15.4758 s
-DNN_best_state_test | DNN | CV score 0.7908 | 14.8959 s
-DNN_best_state_test | DNN | CV score 0.8019 | 145.7179 s
-DNN_best_state_test | DNN | CV score 0.7908 | 37.5568 s
-DNN_best_state_test | DNN | CV score 0.7908 | 16.8385 s
-DNN_best_state_test | DNN | CV score 0.7908 | 14.3069 s
-DNN_best_state_test | DNN | CV score 0.7908 | 13.0347 s
-tree_playing_parameters | decision_tree | CV score 0.7865 | 0.0991 s
-tree_playing_parameters | decision_tree | CV score 0.8132 | 0.0875 s
-tree_playing_parameters | decision_tree | CV score 0.8187 | 0.0835 s
-tree_playing_parameters | decision_tree | CV score 0.8230 | 0.0816 s
-tree_playing_parameters | decision_tree | CV score 0.8244 | 0.0812 s
-tree_playing_parameters | decision_tree | CV score 0.8187 | 0.0825 s
-tree_playing_parameters | decision_tree | CV score 0.8118 | 0.0772 s
-tree_playing_parameters | decision_tree | CV score 0.8174 | 0.0917 s
-tree_playing_parameters | decision_tree | CV score 0.8132 | 0.0781 s
-random_forest_playing_parameters | random_forest | CV score 0.8398 | 12.1126 s
-random_forest_playing_parameters | random_forest | CV score 0.8356 | 1.4275 s
-random_forest_playing_parameters | random_forest | CV score 0.7837 | 1.4718 s
-random_forest_playing_parameters | random_forest | CV score 0.8160 | 1.4140 s
-random_forest_playing_parameters | random_forest | CV score 0.8384 | 1.4439 s
-playing_parameters | catboost | CV score 0.8272 | 1.4236 s
-playing_parameters | catboost | CV score 0.8272 | 1.3718 s
-playing_parameters | xgboost | CV score 0.8384 | 1.8610 s
-playing_parameters | lgbm | CV score 0.8328 | 1.7213 s
-playing_parameters | lgbm | CV score 0.8328 | 1.6404 s
-playing_parameters | lgbm | CV score 0.8328 | 1.6110 s
-playing_parameters | lgbm | CV score 0.8328 | 1.5729 s
-playing_parameters | lgbm | CV score 0.8328 | 1.5505 s
-playing_parameters | lgbm | CV score 0.8328 | 1.6864 s
-catboost 5000 | catboost | CV score 0.8272 | 1.5173 s
-catboost 5000 | catboost | CV score 0.8272 | 1.4070 s
-catboost 5000 | catboost | CV score 0.8272 | 1.4023 s
-DNN_prikol | DNN | CV score 0.7908 | 13.4616 s
-DNN_prikol | DNN | CV score 0.7908 | 14.4616 s
-optuna_test | logreg | CV score 0.8062 | 0.2806 s
-optuna_test | random_forest | CV score 0.8440 | 4.6263 s
-optuna_test | KNN | CV score 0.8159 | 0.3249 s
-optuna_test | catboost | CV score 0.8399 | 2.0906 s
-optuna_test | xgboost | CV score 0.8469 | 1.8418 s
-optuna_test | DNN | CV score 0.8286 | 561.6313 s
-optuna_test2 | DNN | CV score 0.8146 | 82.9597 s
-optuna_test3 | catboost | CV score 0.8385 | 0.9309 s
-DNN batch 64 | catboost | CV score 0.8272 | 1.3865 s
-DNN batch 64 | DNN | CV score 0.7586 | 9.2559 s
-optuna_test3_njobs 1 | catboost | CV score 0.8328 | 0.6738 s
-optuna_test3_njobs -1 | catboost | CV score 0.8399 | 0.8731 s
-optuna_test3_njobs -1 | catboost | CV score 0.8398 | 0.7220 s
-optuna_test3_njobs 1 | catboost | CV score 0.8328 | 0.6863 s
-optuna_test3_njobs 1 thread | catboost | CV score 0.8328 | 0.6914 s
-optuna_test3_njobs -1 thred | catboost | CV score 0.8384 | 0.6357 s
-DNN cpu test | catboost | CV score 0.8272 | 1.3527 s
-DNN cpu test | DNN | CV score 0.7908 | 10.6492 s
-DNN gpu test | DNN | CV score 0.7908 | 13.1237 s
-catboost baseline submit | catboost | CV score 0.8305 | 1.7659 s
-catboost baseline submit | catboost | CV score 0.8305 | 1.6236 s
-catboost baseline submit | catboost | CV score 0.8361 | 1.0627 s
-catboost nofare submit | catboost | CV score 0.8294 | 4.4724 s
-xgboost submit | xgboost | CV score 0.8361 | 1.0341 s
-random_forest submit | random_forest | CV score 0.8361 | 1.4339 s
-DNN submit | DNN | CV score 0.8002 | 13.8612 s
-DNN submit | logreg | CV score 0.8069 | 0.0785 s
-DNN submit | decision_tree | CV score 0.8249 | 0.0724 s
-KNN submit | KNN | CV score 0.8170 | 0.0796 s
-KNN submit | KNN | CV score 0.8170 | 0.0827 s
-KNN | KNN | CV score 0.7845 | 0.0713 s
-random_forest | random_forest | CV score 0.8249 | 1.4055 s
-random_forest | random_forest | CV score 0.8249 | 1.4200 s
-random_forest | random_forest | CV score 0.8249 | 1.5722 s
-title new feature | logreg | CV score 0.8238 | 0.1147 s
-title new feature | KNN | CV score 0.7879 | 1.5276 s
-title new feature | decision_tree | CV score 0.8136 | 0.1024 s
-title new feature | random_forest | CV score 0.8316 | 1.4777 s
-title new feature | catboost | CV score 0.8395 | 13.0391 s
-title new feature | xgboost | CV score 0.8282 | 0.7920 s
-title new feature | lgbm | CV score 0.8339 | 0.3830 s
-title new feature | DNN | CV score 0.8137 | 11.2274 s
-title new feature | stacking_knn_tree_logreg | CV score 0.8260 | 1.6995 s
-NO title new feature | logreg | CV score 0.8058 | 0.0816 s
-NO title new feature | KNN | CV score 0.7845 | 0.0708 s
-NO title new feature | decision_tree | CV score 0.8069 | 0.0615 s
-NO title new feature | random_forest | CV score 0.8249 | 1.5251 s
-NO title new feature | catboost | CV score 0.8305 | 1.5170 s
-NO title new feature | xgboost | CV score 0.8260 | 0.6313 s
-NO title new feature | lgbm | CV score 0.8339 | 1.6150 s
-NO title new feature | DNN | CV score 0.8002 | 11.5962 s
-NO title new feature | stacking_knn_tree_logreg | CV score 0.8159 | 1.0412 s
-title new feature catboost tuned | catboost | CV score 0.8361 | 1.0608 s
-no fare title new feature catboost tuned | catboost | CV score 0.8294 | 4.9314 s
-title new feature catboost tuned | catboost | CV score 0.8361 | 3.5466 s
-title new feature catboost tuned | catboost | CV score 0.8406 | 1.5260 s
-title new feature catboost tuned | catboost | CV score 0.8440 | 1.1190 s
-DNN optuna | DNN | CV score 0.8428 | 10.0875 s
-DNN 2 layer | DNN | CV score 0.8440 | 24.1198 s
-DNN baseline | DNN | CV score 0.8384 | 11.5181 s
+baseline | logreg | CV score 0.7946 | 0.1021 s
+baseline | KNN | CV score 0.7957 | 0.0728 s
+baseline | decision_tree | CV score 0.8081 | 0.0659 s
+baseline | random_forest | CV score 0.8249 | 1.6706 s
+baseline | catboost | CV score 0.8316 | 2.2212 s
+baseline | xgboost | CV score 0.8204 | 4.1546 s
+baseline | lgbm | CV score 0.8327 | 2.7530 s
+baseline | DNN | CV score 0.8272 | 14.4049 s
+baseline | stacking_knn_tree_logreg | CV score 0.8215 | 1.0553 s
+drop_Fare | logreg | CV score 0.7901 | 0.0951 s
+drop_Fare | KNN | CV score 0.8092 | 0.0800 s
+drop_Fare | decision_tree | CV score 0.8148 | 0.0659 s
+drop_Fare | random_forest | CV score 0.8271 | 1.7275 s
+drop_Fare | catboost | CV score 0.8294 | 1.3792 s
+drop_Fare | xgboost | CV score 0.8170 | 3.1774 s
+drop_Fare | lgbm | CV score 0.8249 | 2.9925 s
+drop_Fare | DNN | CV score 0.8249 | 32.2418 s
+drop_Fare | stacking_knn_tree_logreg | CV score 0.8294 | 0.9950 s
+add_title | logreg | CV score 0.8282 | 0.0889 s
+add_title | KNN | CV score 0.7979 | 1.7833 s
+add_title | decision_tree | CV score 0.8136 | 0.0952 s
+add_title | random_forest | CV score 0.8350 | 1.4261 s
+add_title | catboost | CV score 0.8372 | 1.5483 s
+add_title | xgboost | CV score 0.8294 | 1.9816 s
+add_title | lgbm | CV score 0.8361 | 0.3824 s
+add_title | DNN | CV score 0.8338 | 12.0444 s
+add_title | stacking_knn_tree_logreg | CV score 0.8283 | 1.6859 s
+add_all_new_features | logreg | CV score 0.8260 | 0.0988 s
+add_all_new_features | KNN | CV score 0.7878 | 1.4813 s
+add_all_new_features | decision_tree | CV score 0.8125 | 0.0970 s
+add_all_new_features | random_forest | CV score 0.8316 | 1.4875 s
+add_all_new_features | catboost | CV score 0.8406 | 1.5173 s
+add_all_new_features | xgboost | CV score 0.8260 | 1.9670 s
+add_all_new_features | lgbm | CV score 0.8384 | 0.3673 s
+add_all_new_features | DNN | CV score 0.8384 | 11.8425 s
+add_all_new_features | stacking_knn_tree_logreg | CV score 0.8282 | 1.7091 s
+ML_all_features_optuna | logreg | CV score 0.8282 | 0.2594 s
+ML_all_features_optuna | KNN | CV score 0.8327 | 0.1994 s
+ML_all_features_optuna | decision_tree | CV score 0.8215 | 0.1997 s
+ML_all_features_optuna | random_forest | CV score 0.8451 | 4.2194 s
+ML_all_features_optuna | catboost | CV score 0.8440 | 3.5714 s
+ML_all_features_optuna | xgboost | CV score 0.8361 | 1.8403 s
+ML_all_features_optuna | lgbm | CV score 0.8440 | 1.9897 s
+ML_all_features_optuna | stacking_knn_tree_logreg | CV score 0.8316 | 3.1374 s
+DNN_optuna | DNN | CV score 0.8428 | 10.0875 s
+DNN_2_layer | DNN | CV score 0.8440 | 24.1198 s
+DNN_dropout | DNN | CV score 0.8327 | 14.9253 s

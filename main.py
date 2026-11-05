@@ -51,6 +51,7 @@ def main():
                     }
                 }
             
+        metrics = {}
         for model_name in config.models_to_train:
             
             val_scores, cv_time = run_cv(X, y, model_name, config)
@@ -59,11 +60,14 @@ def main():
             print(f'{model_name} CV mean score = {mean_cv_score:.4f}')
             print(f'{model_name} CV scores std = {np.std(val_scores):.4f}')
             print(f'{model_name} CV time = {cv_time:.4f}\n')
+            metrics[model_name] = mean_cv_score
             
             # Logging in results.txt
             with open('results.txt', 'a') as f:
                 f.write(f'{config.experiment_name} | {model_name} | CV score {mean_cv_score:.4f} | {cv_time:.4f} s\n')
         
+        best_model = max(metrics, key=metrics.get)
+        print(f'\nBest model: {best_model}, CV score: {metrics[best_model]:.4f}')
         
         # Сertain experiment config
         experiment_config = config.to_dict()
@@ -78,10 +82,13 @@ def main():
             experiment_config['git_commit'] = None
             
             
-        os.makedirs(config.path_to_experiment, exist_ok=True)
         # Saving experiment config
         with open(f'{config.path_to_experiment}/config.json', 'w') as f:
-            json.dump(experiment_config, f, indent=4)                        
+            json.dump(experiment_config, f, indent=4)
+        
+        # Saving metrics
+        with open(f'{config.path_to_experiment}/metrics.json', 'w') as f:
+            json.dump(metrics, f, indent=4)                  
              
 
     # Test score
@@ -111,7 +118,8 @@ def main():
             'PassengerId': kaggle_test.index,
             'Survived': pred
         })
-        submission.to_csv('submission.csv', index=False)
+        os.makedirs(config.path_to_submissions, exist_ok=True)
+        submission.to_csv(f'{config.path_to_submissions}/{config.experiment_name}_{solver.model_name}.csv', index=False)
         
 
 if __name__ == '__main__':

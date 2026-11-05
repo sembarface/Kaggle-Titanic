@@ -3,26 +3,26 @@ class Config:
     
     seed = 228
 
-    experiment_name = 'DNN baseline'
+    experiment_name = 'ML_all_features_optuna'
     
     models_to_train = [
-        # 'logreg',
-        # 'KNN',
-        # 'decision_tree',
-        # 'random_forest',
-        # 'catboost',
-        # 'xgboost',
-        # 'lgbm',
+        'logreg',
+        'KNN',
+        'decision_tree',
+        'random_forest',
+        'catboost',
+        'xgboost',
+        'lgbm',
         'DNN',
-        # 'stacking_knn_tree_logreg'
+        'stacking_knn_tree_logreg'
     ]
     
-    solver_model = 'DNN'
+    solver_model = 'catboost'
     get_submission = True
     
     use_holdout = False
 
-    is_train = True
+    is_train = False
     
     use_optuna = False
     optuna_n_trials = 30
@@ -32,6 +32,7 @@ class Config:
     
     path_to_experiment = f"experiments/{experiment_name}"
     path_to_data = f"data/train.csv"
+    path_to_submissions = f'submissions'
     
     
     feature_parameters = {
@@ -317,10 +318,6 @@ class Config:
             'cv': {
                 'type': 'categorical',
                 'choices': [3, 5]
-            },
-            'passthrough': {
-                'type': 'categorical',
-                'choices': [False, True]
             },
         },
     }

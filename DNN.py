@@ -62,6 +62,7 @@ class DNN(nn.Module):
             if col not in categorical
         ]
 
+        # Input data preprocessor
         self.preprocessor = ColumnTransformer([
             ('num', make_pipeline(
                 SimpleImputer(strategy='median'),
