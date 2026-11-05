@@ -3,7 +3,7 @@ class Config:
     
     seed = 228
 
-    experiment_name = 'ML_all_features_optuna'
+    experiment_name = '---'
     
     models_to_train = [
         'logreg',
@@ -22,7 +22,7 @@ class Config:
     
     use_holdout = False
 
-    is_train = False
+    is_train = True
     
     use_optuna = False
     optuna_n_trials = 30
